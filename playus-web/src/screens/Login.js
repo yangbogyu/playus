@@ -1,7 +1,4 @@
-import {
-  faFacebookSquare,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -121,7 +118,6 @@ function Login() {
       <Wrapper>
         <TopBox>
           <div>
-            {/* <FontAwesomeIcon icon={faInstagram} size="3x" /> */}
             <Logo>Playus</Logo>
           </div>
           <form>
