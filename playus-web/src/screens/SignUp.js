@@ -32,10 +32,10 @@ function SingUp() {
           </Subtitle>
         </HeaderContainer>
         <form>
-          <Input type="text" placeholder="Name" />
-          <Input type="text" placeholder="Email" />
           <Input type="text" placeholder="Username" />
+          <Input type="text" placeholder="Email" />
           <Input type="password" placeholder="Password" />
+          <Input type="password" placeholder="Check password" />
           <Button type="submit" value="Sign up" />
         </form>
       </FormBox>
