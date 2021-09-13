@@ -1,5 +1,5 @@
 from logging import fatal
-import os, pymysql, json, datetime, bcrypt
+import os, pymysql, json, datetime, bcrypt, jwt
 from flask import request
 from flask_restx import Resource, Api, Namespace
 from dotenv import load_dotenv
@@ -19,42 +19,72 @@ Player = Namespace(
     description='유저관리를 위한 API'
 )
 
-@Player.route('/membership')
-class Membership(Resource):
+@Player.route('/createAccount')
+class CreateAccount(Resource):
     def post(self):
         '''회원가입'''
 
         data = request.get_json()
         user_id = data['user_id']
         user_pw = data['user_pw']
-        user_name = data['user_name']
+        user_phone = data['user_phone']
         user_mail = data['user_mail']
 
+        #id 체크
+        base = db.cursor()
+        sql = f'select user_id from User\
+                where user_id = "{user_id}";'
+        base.execute(sql)
+        id = base.fetchall()
+        if id:
+            base.close()
+            return {'id': False}
+        else:
+            #phone 체크
+            base = db.cursor()
+            sql = f'select user_phone from User\
+                where user_phone = "{user_phone}";'
+            base.execute(sql)
+            phone = base.fetchall()
+            if phone:
+                base.close()
+                return {'phone': False}
+            else :
+                #mail 체크
+                base = db.cursor()
+                sql = f'select user_mail from User\
+                    where user_mail = "{user_mail}";'
+                base.execute(sql)
+                mail = base.fetchall()
+                if mail:
+                    return {'mail': False}
+
+        # 중복없음 비밀번호 암호화
         user_bcrypt = bcrypt.hashpw(user_pw.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+        #db값 저장
         base = db.cursor()
-        sql = f'insert into Player(user_id, user_pw, user_name, user_mail)\
-                values ("{user_id}", "{user_bcrypt}", "{user_name}", "{user_mail}");'
+        sql = f'insert into User(user_id, user_pw, user_phone, user_mail)\
+                values ("{user_id}", "{user_bcrypt}", "{user_phone}", "{user_mail}");'
         base.execute(sql)
         db.commit()
         base.close()
-        print(user_pw)
-        return {'membership' : True}
+        return {'createAccount' : True}
 
-@Player.route('/membership/<string:user_id>')
+@Player.route('/createAccount/<string:user_id>')
 class CheckID(Resource):
     def get(self, user_id):
         '''회원가입 ID중복 확인'''
         base = db.cursor()
         sql = f'select user_id\
-                from Player\
+                from User\
                 where user_id = "{user_id}"'
         base.execute(sql)
         user = base.fetchall()
         base.close()
-        if user != '':
-            return {'ID': False}
-        return {'ID': True}
+        if user:
+            return {'id': False}
+        return {'id': True}
 
 
 @Player.route('/login')
@@ -68,21 +98,21 @@ class Login(Resource):
 
         base = db.cursor()
         sql = f'select user_id\
-                from Player\
+                from User\
                 where user_id = "{user_id}"'
         base.execute(sql)
         user = base.fetchall()
-        if user == '':
-            return{'user': False}
-        else :
+        if user:
             base = db.cursor()
             sql = f'select user_pw\
-                from Player\
+                from User\
                 where user_id = "{user_id}"'
             base.execute(sql)
-            user = {"user":base.fetchall()}
-            for r in user['user']:
+            user = base.fetchall()
+            for r in user:
                 user_bcrypt = r['user_pw']
                 PW = bcrypt.checkpw(user_pw.encode('utf-8'), user_bcrypt.encode('utf-8'))
-                return {'user': PW}
+                return {'login': PW}
+        else :
+            return{'login': False}
         
