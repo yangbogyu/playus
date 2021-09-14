@@ -1,11 +1,11 @@
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import AuthLayout from "../components/auth/AuthLayout";
 import BottomBox from "../components/auth/BottomBox";
 import Button from "../components/auth/Button";
 import FormBox from "../components/auth/FormBox";
 import Input from "../components/auth/Input";
+import PageTitle from "../components/PageTitle";
 import { FatLink } from "../components/shared";
 import routes from "../routes";
 
@@ -15,6 +15,12 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
+const TLogo = styled.h1`
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
 const Subtitle = styled(FatLink)`
   font-size: 16px;
   text-align: center;
@@ -22,21 +28,57 @@ const Subtitle = styled(FatLink)`
 `;
 
 function SingUp() {
+  const { register, handleSubmit, errors, formState } = useForm({
+    mode: "onChange",
+  });
+  const onSubmitValid = (data) => {
+    console.log(data);
+  };
+  const onSubmitInvalid = (data) => {
+    console.log(data, "invalid");
+  };
   return (
     <AuthLayout>
+      <PageTitle title="Sign up" />
       <FormBox>
         <HeaderContainer>
-          <FontAwesomeIcon icon={faInstagram} size="3x" />
-          <Subtitle>
-            Sign up to see photos and videos from your friends.
-          </Subtitle>
+          <TLogo>Playus</TLogo>
+          <Subtitle></Subtitle>
         </HeaderContainer>
-        <form>
-          <Input type="text" placeholder="Username" />
-          <Input type="text" placeholder="Email" />
-          <Input type="password" placeholder="Password" />
-          <Input type="password" placeholder="Check password" />
-          <Button type="submit" value="Sign up" />
+        <form onSubmit={handleSubmit(onSubmitValid)}>
+          <Input
+            ref={register({
+              required: "Username is required.",
+            })}
+            name="username"
+            type="text"
+            placeholder="Username"
+          />
+          <Input
+            ref={register({
+              required: "Password is required.",
+            })}
+            name="password"
+            type="password"
+            placeholder="Password"
+          />
+          <Input
+            ref={register({
+              required: "CheckPassword is required.",
+            })}
+            name="Password"
+            type="password"
+            placeholder="CheckPassword"
+          />
+          <Input
+            ref={register({
+              required: "Email is required.",
+            })}
+            name="email"
+            type="password"
+            placeholder="Email"
+          />
+          <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
         </form>
       </FormBox>
       <BottomBox cta="Have an account?" linkText="Log in" link={routes.home} />
