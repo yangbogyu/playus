@@ -14,26 +14,26 @@ db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     charset=os.getenv('MYSQL_CHARSET'),
                     cursorclass=pymysql.cursors.DictCursor)\
 
-Player = Namespace(
-    name='Login',
-    description='유저관리를 위한 API'
-)
+Create = Namespace(
+    name='createAccount',
+    description='createAccount API'
+    )
 
-@Player.route('/createAccount')
+@Create.route('')
 class CreateAccount(Resource):
     def post(self):
         '''회원가입'''
 
         data = request.get_json()
-        user_id = data['user_id']
+        user_name = data['user_name']
         user_pw = data['user_pw']
         user_phone = data['user_phone']
         user_mail = data['user_mail']
 
         #id 체크
         base = db.cursor()
-        sql = f'select user_id from User\
-                where user_id = "{user_id}";'
+        sql = f'select user_name from User\
+                where user_name = "{user_name}";'
         base.execute(sql)
         id = base.fetchall()
         if id:
@@ -64,55 +64,24 @@ class CreateAccount(Resource):
 
         #db값 저장
         base = db.cursor()
-        sql = f'insert into User(user_id, user_pw, user_phone, user_mail)\
-                values ("{user_id}", "{user_bcrypt}", "{user_phone}", "{user_mail}");'
+        sql = f'insert into User(user_name, user_pw, user_phone, user_mail)\
+                values ("{user_name}", "{user_bcrypt}", "{user_phone}", "{user_mail}");'
         base.execute(sql)
         db.commit()
         base.close()
         return {'createAccount' : True}
 
-@Player.route('/createAccount/<string:user_id>')
+@Create.route('/<string:user_name>')
 class CheckID(Resource):
-    def get(self, user_id):
+    def get(self, user_name):
         '''회원가입 ID중복 확인'''
         base = db.cursor()
-        sql = f'select user_id\
+        sql = f'select user_name\
                 from User\
-                where user_id = "{user_id}"'
+                where user_name = "{user_name}"'
         base.execute(sql)
         user = base.fetchall()
         base.close()
         if user:
             return {'id': False}
         return {'id': True}
-
-
-@Player.route('/login')
-class Login(Resource):
-    def put(self):
-        '''로그인 인증'''
-
-        data = request.get_json()
-        user_id = data['user_id']
-        user_pw = data['user_pw']
-
-        base = db.cursor()
-        sql = f'select user_id\
-                from User\
-                where user_id = "{user_id}"'
-        base.execute(sql)
-        user = base.fetchall()
-        if user:
-            base = db.cursor()
-            sql = f'select user_pw\
-                from User\
-                where user_id = "{user_id}"'
-            base.execute(sql)
-            user = base.fetchall()
-            for r in user:
-                user_bcrypt = r['user_pw']
-                PW = bcrypt.checkpw(user_pw.encode('utf-8'), user_bcrypt.encode('utf-8'))
-                return {'login': PW}
-        else :
-            return{'login': False}
-        

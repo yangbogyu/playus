@@ -14,43 +14,39 @@ db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     cursorclass=pymysql.cursors.DictCursor)
 
 
-user_id = '11243'
-user_phone = '123144'
-user_mail = 'user_mail'
+user_name = 'ybg1588'
 
 #id 체크
 base = db.cursor()
-sql = f'select user_id from User\
-        where user_id = "{user_id}";'
+sql = f'select mark_sport, mark_time, mark_place from Mark\
+        where user_name = "{user_name}";'
 base.execute(sql)
-id = base.fetchall()
+mark = base.fetchall()
+base.close()
+print(mark)
 
+for i in mark:
+    mark_sport = i['mark_sport']
+    mark_time = i['mark_time']
+    mark_place = i['mark_place']
 
-if id:
-    base.close()
-    print('아이디 중복')
+if mark_sport:
+    sport_sql = f'where mark_sport = "{mark_sport}"'
 else:
-    #phone 체크
-    base = db.cursor()
-    sql = f'select user_phone from User\
-        where user_phone = "{user_phone}";'
-    base.execute(sql)
-    phone = base.fetchall()
+    sport_sql = ''
 
-    if phone:
-        print('번호 중복')
-    else :
-        #mail 체크
-        base = db.cursor()
-        sql = f'select user_mail from User\
-                where user_mail = "{user_mail}";'
-        base.execute(sql)
-        mail = base.fetchall()
-        if mail:
-            print('메일 중복')
-        else:
-            print('중복없음')
+if mark_time:
+    time_sql = f'where mark_sport = "{mark_sport}"'
+else:
+    time_sql = ''
 
+if mark_place:
+    place_sql = f'where mark_place = "{mark_place}"'
+else:
+    place_sql = ''
 
+base = db.cursor()
+sql = f'select room_title, room_place, mark_place from Room\
+        {sport_sql}{time_sql}{place_sql};'
 
-    
+print(sport_sql+time_sql, place_sql)
