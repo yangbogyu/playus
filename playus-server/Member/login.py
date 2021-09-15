@@ -29,8 +29,8 @@ login = Namespace(
 class Login(Resource):
     def put(self):
         '''로그인 인증'''
-        # data = request.get_json()
-        data = json.loads(request.data)
+        data = request.get_json()
+        # data = json.loads(request.data)
         user_name = data['user_name']
         user_pw = data['user_pw']
 

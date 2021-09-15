@@ -31,11 +31,21 @@ function SingUp() {
   const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
-  const onSubmitValid = (data) => {
-    console.log(data);
-  };
-  const onSubmitInvalid = (data) => {
-    console.log(data, "invalid");
+  const onSubmitValid = ({ user_name, user_pw, user_phone, user_mail }) => {
+    fetch("http://localhost:5000/createAccounts", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_name,
+        user_pw,
+        user_phone,
+        user_mail,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
   };
   return (
     <AuthLayout>
@@ -50,7 +60,7 @@ function SingUp() {
             ref={register({
               required: "Username is required.",
             })}
-            name="username"
+            name="user_name"
             type="text"
             placeholder="Username"
           />
@@ -58,24 +68,24 @@ function SingUp() {
             ref={register({
               required: "Password is required.",
             })}
-            name="password"
+            name="user_pw"
             type="password"
             placeholder="Password"
           />
           <Input
             ref={register({
-              required: "CheckPassword is required.",
+              required: "Phone is required.",
             })}
-            name="Password"
-            type="password"
+            name="user_phone"
+            type="text"
             placeholder="CheckPassword"
           />
           <Input
             ref={register({
               required: "Email is required.",
             })}
-            name="email"
-            type="password"
+            name="user_mail"
+            type="text"
             placeholder="Email"
           />
           <Button type="submit" value="Sign Up" disabled={!formState.isValid} />

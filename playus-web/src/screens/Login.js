@@ -35,14 +35,19 @@ function Login() {
     mode: "onChange",
   });
   // register에 부합한 -> data
-  const onSubmitValid = (data) => {
-    console.log(data);
+  const onSubmitValid = ({ user_name, user_pw }) => {
     fetch("http://localhost:5000/logins", {
       method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: data,
+        user_name,
+        user_pw,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
