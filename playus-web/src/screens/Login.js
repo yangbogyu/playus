@@ -31,13 +31,14 @@ const SignUp = styled.div`
 `;
 
 function Login() {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, getValues } = useForm({
     mode: "onChange",
   });
   // register에 부합한 -> data
   const onSubmitValid = (data) => {
-    fetch("/login", {
-      method: "POST",
+    console.log(data);
+    fetch("http://localhost:5000/logins", {
+      method: "PUT",
       body: JSON.stringify({
         content: data,
       }),
@@ -54,7 +55,7 @@ function Login() {
             ref={register({
               required: "Username is required",
             })}
-            name="username"
+            name="user_name"
             type="text"
             placeholder="Username"
             hasError={Boolean(errors?.username?.message)}
@@ -64,7 +65,7 @@ function Login() {
             ref={register({
               required: "Password is required.",
             })}
-            name="password"
+            name="user_pw"
             type="password"
             placeholder="Password"
             hasError={Boolean(errors?.password?.message)}
