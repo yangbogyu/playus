@@ -1,12 +1,16 @@
 import { makeVar } from "@apollo/client";
 
-export const isLoggedInVar = makeVar(false);
+const LOGIN = "LOGIN";
+
+export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(LOGIN)));
 export const darkModeVar = makeVar(false);
 
-// export const logUserIn = () => {
-//   isLoggedInVar(true);
-// };
+export const logUserIn = (user_name) => {
+  localStorage.setItem(LOGIN, user_name);
+  isLoggedInVar(true);
+};
 
 export const logUserout = () => {
-  isLoggedInVar(false);
+  localStorage.removeItem(LOGIN);
+  window.location.reload();
 };

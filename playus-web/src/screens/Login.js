@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { isLoggedInVar, logUserIn } from "../apollo";
+import { logUserIn } from "../apollo";
 import AuthLayout from "../components/auth/AuthLayout";
 import Button from "../components/auth/Button";
 import FormBox from "../components/auth/FormBox";
@@ -31,7 +31,7 @@ const SignUp = styled.div`
 `;
 
 function Login() {
-  const { register, handleSubmit, errors, formState, getValues } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
   // register에 부합한 -> data
@@ -46,7 +46,9 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        if (res.login === true) {
+          logUserIn(user_name);
+        }
       });
   };
 
@@ -63,9 +65,9 @@ function Login() {
             name="user_name"
             type="text"
             placeholder="Username"
-            hasError={Boolean(errors?.username?.message)}
+            hasError={Boolean(errors?.user_name?.message)}
           />
-          <FormError message={errors?.username?.message} />
+          <FormError message={errors?.user_name?.message} />
           <Input
             ref={register({
               required: "Password is required.",
@@ -73,15 +75,10 @@ function Login() {
             name="user_pw"
             type="password"
             placeholder="Password"
-            hasError={Boolean(errors?.password?.message)}
+            hasError={Boolean(errors?.user_pw?.message)}
           />
-          <FormError message={errors?.password?.message} />
-          <Button
-            type="submit"
-            value="Log in"
-            disabled={!formState.isValid}
-            // onClick={() => isLoggedInVar(true)}
-          />
+          <FormError message={errors?.user_pw?.message} />
+          <Button type="submit" value="Log in" disabled={!formState.isValid} />
         </form>
         <Separator />
         <SignUp>
