@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_restx import Api, Resource
+from flask_cors import CORS, cross_origin
 
 from Member.login import login
 from Member.createAccount import Create
 
 app = Flask(__name__) # Flask 앱 생성
+CORS(app)
 api = Api(# API 서버로 사용할 수 있게해줌.
     app,
     version='0.1',
