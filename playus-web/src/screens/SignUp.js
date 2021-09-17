@@ -8,6 +8,7 @@ import FormError from "../components/auth/FormError";
 import Input from "../components/auth/Input";
 import PageTitle from "../components/PageTitle";
 import routes from "../routes";
+import Logopng from "../img/PLAYUS.png";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -15,37 +16,44 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
-const TLogo = styled.h1`
-  margin-top: 12px;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const Cinput = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
-const Cbutton = styled.input`
-  border: none;
-  border-radius: 3px;
+const Logo = styled.img`
+  width: 50%;
   margin-top: 5px;
-  margin-left: 5px;
-
-  background-color: ${(props) => props.theme.accent};
-  color: white;
-  text-align: center;
-  font-weight: 600;
-  width: 30%;
-  opacity: ${(props) => (props.disabled ? "0.2" : "1")};
 `;
 
 function SingUp() {
   const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
-  const onSubmitValid = ({ user_name, user_pw, user_phone, user_mail }) => {
-    fetch("http://localhost:5000/createAccounts", {
+
+  const checkUsername = async ({ user_name }) => {
+    const ok = await fetch(
+      `http://localhost:5000/createAccounts/IDCheck/${user_name}`
+    ).then((res) => res.json());
+    return ok;
+  };
+
+  const checkEmail = async ({ user_mail }) => {
+    const ok = await fetch(
+      `http://localhost:5000/createAccounts/mailCheck/${user_mail}`
+    ).then((res) => res.json());
+    return ok;
+  };
+
+  const checkPhone = async ({ user_phone }) => {
+    const ok = await fetch(
+      `http://localhost:5000/createAccounts/phoneCheck/${user_phone}`
+    ).then((res) => res.json());
+    return ok;
+  };
+
+  const createAccount = async ({
+    user_name,
+    user_pw,
+    user_phone,
+    user_mail,
+  }) => {
+    const ok = await fetch("http://localhost:5000/createAccounts", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -54,50 +62,49 @@ function SingUp() {
         user_phone,
         user_mail,
       }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      });
+    }).then((res) => res.json());
+    return ok;
   };
 
-  const onCheckValid = ({ user_name }) => {
-    fetch(`http://localhost:5000/createAccounts/${user_name}`)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.id === true) {
-          alert("It's a usable 'Username'");
-        } else if (res.id === false) {
-          alert("This 'Username' is not available.");
-        }
+  const onSubmitValid = async ({
+    user_name,
+    user_pw,
+    user_phone,
+    user_mail,
+  }) => {
+    const { id } = await checkUsername({ user_name });
+    const { mail } = await checkEmail({ user_mail });
+    const { phone } = await checkPhone({ user_phone });
+
+    if (id && mail && phone === true) {
+      const { createAccount } = createAccount({
+        user_name,
+        user_pw,
+        user_phone,
+        user_mail,
       });
+    } else {
+      alert("You can't sign up as a member. Try again");
+    }
   };
+
   return (
     <AuthLayout>
       <PageTitle title="Sign up" />
       <FormBox>
         <HeaderContainer>
-          <TLogo>Playus</TLogo>
+          <Logo src={Logopng} />
         </HeaderContainer>
         <form onSubmit={handleSubmit(onSubmitValid)}>
-          <form onSubmit={handleSubmit(onCheckValid)}>
-            <Cinput>
-              <Input
-                ref={register({
-                  required: "Username is required.",
-                })}
-                name="user_name"
-                type="text"
-                placeholder="Username"
-                hasError={Boolean(errors?.user_name?.message)}
-              />
-              <Cbutton
-                type="submit"
-                value="Check"
-                disabled={!formState.isValid}
-              />
-            </Cinput>
-          </form>
+          <Input
+            ref={register({
+              required: "Username is required.",
+            })}
+            name="user_name"
+            type="text"
+            placeholder="Username"
+            hasError={Boolean(errors?.user_name?.message)}
+          />
           <FormError message={errors?.user_name?.message} />
           <Input
             ref={register({
@@ -115,7 +122,7 @@ function SingUp() {
             })}
             name="user_phone"
             type="text"
-            placeholder="CheckPassword"
+            placeholder="Phone"
             hasError={Boolean(errors?.user_phone?.message)}
           />
           <FormError message={errors?.user_phone?.message} />
