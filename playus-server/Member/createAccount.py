@@ -71,10 +71,10 @@ class CreateAccount(Resource):
         base.close()
         return {'createAccount' : True}
 
-@Create.route('/<string:user_name>')
-class CheckID(Resource):
+@Create.route('/IDCheck/<string:user_name>')
+class IDCheck(Resource):
     def get(self, user_name):
-        '''회원가입 ID중복 확인'''
+        '''회원가입 ID 중복 확인'''
         base = db.cursor()
         sql = f'select user_name\
                 from User\
@@ -85,3 +85,33 @@ class CheckID(Resource):
         if user:
             return {'id': False}
         return {'id': True}
+
+@Create.route('/mailCheck/<string:user_mail>')
+class MailCheck(Resource):
+    def get(self, user_mail):
+        '''회원가입 이메일 중복 확인'''
+        base = db.cursor()
+        sql = f'select user_mail\
+                from User\
+                where user_mail = "{user_mail}"'
+        base.execute(sql)
+        user = base.fetchall()
+        base.close()
+        if user:
+            return {'mail': False}
+        return {'mail': True}
+
+@Create.route('/phoneCheck/<string:user_phone>')
+class PhoneCheck(Resource):
+    def get(self, user_phone):
+        '''회원가입 핸드폰 번호 중복 확인'''
+        base = db.cursor()
+        sql = f'select user_phone\
+                from User\
+                where user_phone = "{user_phone}"'
+        base.execute(sql)
+        user = base.fetchall()
+        base.close()
+        if user:
+            return {'phone': False}
+        return {'phone': True}

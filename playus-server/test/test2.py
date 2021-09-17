@@ -14,11 +14,11 @@ db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     cursorclass=pymysql.cursors.DictCursor)
 
 
-user_name = 'ybg1588'
+user_name = 'test'
 
 #id 체크
 base = db.cursor()
-sql = f'select mark_sport, mark_time, mark_place from Mark\
+sql = f'select mark_sport, mark_place from Mark\
         where user_name = "{user_name}";'
 base.execute(sql)
 mark = base.fetchall()
@@ -27,26 +27,33 @@ print(mark)
 
 for i in mark:
     mark_sport = i['mark_sport']
-    mark_time = i['mark_time']
     mark_place = i['mark_place']
 
 if mark_sport:
-    sport_sql = f'where mark_sport = "{mark_sport}"'
+    sport = True
 else:
-    sport_sql = ''
-
-if mark_time:
-    time_sql = f'where mark_sport = "{mark_sport}"'
-else:
-    time_sql = ''
-
+    sport = False
 if mark_place:
-    place_sql = f'where mark_place = "{mark_place}"'
+    place = True
 else:
-    place_sql = ''
+    place = False
 
+if sport and place:
+    sql = f'select room_title, room_place, room_time, room_total from Room\
+        where room_sport = "{mark_sport}" and room_place = "{mark_place}";'
+elif sport:
+    sql = f'select room_title, room_place, room_time, room_total from Room\
+        where room_sport = "{mark_sport}";'
+elif place:
+    sql = f'select room_title, room_place, room_time, room_total from Room\
+        where room_place = "{mark_place}";'
+else :
+    sql = f'select room_title, room_place, room_time, room_total from Room;'
 base = db.cursor()
-sql = f'select room_title, room_place, mark_place from Room\
-        {sport_sql}{time_sql}{place_sql};'
+base.execute(sql)
+data = base.fetchall()
+for i in data:
+    i['room_time'] = str(i['room_time'])
+print(data)
 
-print(sport_sql+time_sql, place_sql)
+#print(f'select room_title, room_place, room_time, room_total from Room {sport_sql} and {place_sql};')
