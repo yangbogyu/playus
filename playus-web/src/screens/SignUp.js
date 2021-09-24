@@ -47,12 +47,7 @@ function SingUp() {
     return ok;
   };
 
-  const createAccount = async ({
-    user_name,
-    user_pw,
-    user_phone,
-    user_mail,
-  }) => {
+  const signUp = async ({ user_name, user_pw, user_phone, user_mail }) => {
     const ok = await fetch("http://localhost:5000/createAccounts", {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -77,14 +72,17 @@ function SingUp() {
     const { phone } = await checkPhone({ user_phone });
 
     if (id && mail && phone === true) {
-      const { createAccount } = createAccount({
+      const { createAccount } = signUp({
         user_name,
         user_pw,
         user_phone,
         user_mail,
       });
-    } else {
-      alert("You can't sign up as a member. Try again");
+      if ({ createAccount } === true) {
+        alert("I've created an account");
+      } else {
+        alert("You can't sign up as a member. Try again");
+      }
     }
   };
 
@@ -135,6 +133,7 @@ function SingUp() {
             placeholder="Email"
             hasError={Boolean(errors?.user_mail?.message)}
           />
+
           <FormError message={errors?.user_mail?.message} />
           <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
         </form>

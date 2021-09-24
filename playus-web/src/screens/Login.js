@@ -84,7 +84,6 @@ function Login() {
           />
           <FormError message={errors?.user_pw?.message} />
           <Button type="submit" value="Log in" disabled={!formState.isValid} />
-          {/* <FormError message={errors?.user_pw?.message} /> */}
         </form>
         <Separator />
         <SignUp>
