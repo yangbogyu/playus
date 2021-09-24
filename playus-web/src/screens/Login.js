@@ -10,11 +10,11 @@ import Input from "../components/auth/Input";
 import Separator from "../components/auth/Separator";
 import PageTitle from "../components/PageTitle";
 import routes from "../routes";
+import Logopng from "../img/PLAYUS.png";
 
-const Logo = styled.h1`
-  margin-top: 7px;
-  font-size: 20px;
-  font-weight: 600;
+const Logo = styled.img`
+  width: 50%;
+  margin-top: 5px;
 `;
 
 const SignUp = styled.div`
@@ -31,32 +31,37 @@ const SignUp = styled.div`
 `;
 
 function Login() {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, setError } = useForm({
     mode: "onChange",
   });
-  // register에 부합한 -> data
-  const onSubmitValid = ({ user_name, user_pw }) => {
-    fetch("http://localhost:5000/logins", {
+
+  const fetchLogin = async ({ user_name, user_pw }) => {
+    const ok = await fetch("http://localhost:5000/logins", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user_name,
         user_pw,
       }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.login === true) {
-          logUserIn(user_name);
-        }
-      });
+    }).then((res) => res.json());
+    return ok;
+  };
+
+  // register에 부합한 -> data
+  const onSubmitValid = async ({ user_name, user_pw }) => {
+    const { login } = await fetchLogin({ user_name, user_pw });
+    if (login === true) {
+      logUserIn(user_name);
+    } else if (login === false) {
+      alert("Please enter your 'Usernaem' and 'Password' correctly.");
+    }
   };
 
   return (
     <AuthLayout>
       <PageTitle title="Login" />
       <FormBox>
-        <Logo>Playus</Logo>
+        <Logo src={Logopng} />
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
             ref={register({
@@ -79,6 +84,7 @@ function Login() {
           />
           <FormError message={errors?.user_pw?.message} />
           <Button type="submit" value="Log in" disabled={!formState.isValid} />
+          {/* <FormError message={errors?.user_pw?.message} /> */}
         </form>
         <Separator />
         <SignUp>
