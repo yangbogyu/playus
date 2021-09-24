@@ -37,7 +37,8 @@ class Room(Resource):
                 mark_sport = i['mark_sport']
                 mark_place = i['mark_place']
         else :
-            return {'error' : 'not id'}
+            mark_sport = False
+            mark_place = False
 
         if mark_sport :
             sport = True
@@ -48,17 +49,34 @@ class Room(Resource):
         else :
             place = False
 
-        if sport and place :
-            sql = f'select room_title, room_place, room_time, room_total from Room\
-                where room_sport = "{mark_sport}" and room_place = "{mark_place}";'
-        elif sport :
-            sql = f'select room_title, room_place, room_time, room_total from Room\
-                where room_sport = "{mark_sport}";'
-        elif place :
-            sql = f'select room_title, room_place, room_time, room_total from Room\
-                where room_place = "{mark_place}";'
+        if sport and place:
+            sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+                from Room as r\
+                right outer join Room_user as u\
+                on u.room_no = r.room_no\
+                where r.room_sport = "{mark_sport}" and r.room_place = "{mark_place}"\
+                group by r.room_no having count(*);'
+        elif sport:
+            sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+                from Room as r\
+                right outer join Room_user as u\
+                on u.room_no = r.room_no\
+                where r.room_sport = "{mark_sport}"\
+                group by r.room_no having count(*);'
+        elif place:
+            sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+                from Room as r\
+                right outer join Room_user as u\
+                on u.room_no = r.room_no\
+                where r.room_place = "{mark_place}"\
+                group by r.room_no having count(*);'
         else :
-            sql = f'select room_title, room_place, room_time, room_total from Room;'
+            sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+                from Room as r\
+                right outer join Room_user as u\
+                on u.room_no = r.room_no\
+                group by r.room_no having count(*);'
+                
         base = db.cursor()
         base.execute(sql)
         data = base.fetchall()
