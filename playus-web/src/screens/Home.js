@@ -4,6 +4,10 @@ import Navbar from "../components/Nav/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+const Splace = styled.div``;
+
+const Place = styled.div``;
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -35,7 +39,7 @@ export default function Home() {
       <Navbar />
       <Wrapper></Wrapper>
       <Icon>
-        <FontAwesomeIcon icon={faPlus} size="2x" />
+        <FontAwesomeIcon icon={faPlus} size="lg" />
       </Icon>
     </div>
   );

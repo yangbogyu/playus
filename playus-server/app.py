@@ -6,6 +6,7 @@ from Member.login import login
 from Member.createAccount import Create
 from Room.seeRoom import seeRoom
 from Room.createRoom import createRoom
+from Room.inRoom import inRoom
 
 app = Flask(__name__)  # Flask 앱 생성
 CORS(app)
@@ -22,6 +23,7 @@ api.add_namespace(login, '/logins')
 api.add_namespace(Create, '/createAccounts')
 api.add_namespace(seeRoom, '/seeRooms')
 api.add_namespace(createRoom, '/createRooms')
+api.add_namespace(inRoom, '/inRooms')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

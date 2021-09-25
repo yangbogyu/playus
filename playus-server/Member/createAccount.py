@@ -1,23 +1,29 @@
 from logging import fatal
-import os, pymysql, json, datetime, bcrypt, jwt
+import os
+import pymysql
+import json
+import datetime
+import bcrypt
+import jwt
 from flask import request
 from flask_restx import Resource, Api, Namespace
 from dotenv import load_dotenv
 
-load_dotenv() # `.env`파일 불러옴
+load_dotenv()  # `.env`파일 불러옴
 
 db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                    port=int(os.getenv('MYSQL_PORT')),
-                    user=os.getenv('MYSQL_USER'),
-                    passwd=os.getenv('MYSQL_PASSWORD'),
-                    db=os.getenv('MYSQL_DATABASE'),
-                    charset=os.getenv('MYSQL_CHARSET'),
-                    cursorclass=pymysql.cursors.DictCursor)\
+                     port=int(os.getenv('MYSQL_PORT')),
+                     user=os.getenv('MYSQL_USER'),
+                     passwd=os.getenv('MYSQL_PASSWORD'),
+                     db=os.getenv('MYSQL_DATABASE'),
+                     charset=os.getenv('MYSQL_CHARSET'),
+                     cursorclass=pymysql.cursors.DictCursor)\
 
 Create = Namespace(
     name='createAccount',
     description='createAccount API'
-    )
+)
+
 
 @Create.route('')
 class CreateAccount(Resource):
@@ -30,7 +36,7 @@ class CreateAccount(Resource):
         user_phone = data['user_phone']
         user_mail = data['user_mail']
 
-        #id 체크
+        # id 체크
         base = db.cursor()
         sql = f'select user_name from User\
                 where user_name = "{user_name}";'
@@ -40,7 +46,7 @@ class CreateAccount(Resource):
             base.close()
             return {'id': False}
         else:
-            #phone 체크
+            # phone 체크
             base = db.cursor()
             sql = f'select user_phone from User\
                 where user_phone = "{user_phone}";'
@@ -49,8 +55,8 @@ class CreateAccount(Resource):
             if phone:
                 base.close()
                 return {'phone': False}
-            else :
-                #mail 체크
+            else:
+                # mail 체크
                 base = db.cursor()
                 sql = f'select user_mail from User\
                     where user_mail = "{user_mail}";'
@@ -60,16 +66,18 @@ class CreateAccount(Resource):
                     return {'mail': False}
 
         # 중복없음 비밀번호 암호화
-        user_bcrypt = bcrypt.hashpw(user_pw.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        user_bcrypt = bcrypt.hashpw(user_pw.encode(
+            'utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-        #db값 저장
+        # db값 저장
         base = db.cursor()
         sql = f'insert into User(user_name, user_pw, user_phone, user_mail)\
                 values ("{user_name}", "{user_bcrypt}", "{user_phone}", "{user_mail}");'
         base.execute(sql)
         db.commit()
         base.close()
-        return {'createAccount' : True}
+        return {'createAccount': True}
+
 
 @Create.route('/IDCheck/<string:user_name>')
 class IDCheck(Resource):
@@ -86,6 +94,7 @@ class IDCheck(Resource):
             return {'id': False}
         return {'id': True}
 
+
 @Create.route('/mailCheck/<string:user_mail>')
 class MailCheck(Resource):
     def get(self, user_mail):
@@ -100,6 +109,7 @@ class MailCheck(Resource):
         if user:
             return {'mail': False}
         return {'mail': True}
+
 
 @Create.route('/phoneCheck/<string:user_phone>')
 class PhoneCheck(Resource):
