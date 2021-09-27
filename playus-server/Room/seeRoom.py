@@ -25,7 +25,7 @@ class Room(Resource):
         '''방 리스트'''
 
         base = db.cursor()
-        sql = f'select mark_sport, mark_place from Mark\
+        sql = f'select user_sport, user_place from user\
                 where user_name = "{user_name}";'
         base.execute(sql)
         mark = base.fetchall()
@@ -34,17 +34,17 @@ class Room(Resource):
         # 값 받아서 저장
         if mark:
             for i in mark:
-                mark_sport = i['mark_sport']
-                mark_place = i['mark_place']
+                user_sport = i['user_sport'] # 종목
+                user_place = i['user_place'] # 장소
         else :
-            mark_sport = False
-            mark_place = False
+            user_sport = False
+            user_place = False
 
-        if mark_sport :
+        if user_sport :
             sport = True
         else :
             sport = False
-        if mark_place :
+        if user_place :
             place = True
         else :
             place = False
@@ -54,21 +54,21 @@ class Room(Resource):
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
-                where r.room_sport = "{mark_sport}" and r.room_place = "{mark_place}"\
+                where r.room_sport = "{user_sport}" and r.room_place = "{user_place}"\
                 group by r.room_no having count(*);'
         elif sport:
             sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
-                where r.room_sport = "{mark_sport}"\
+                where r.room_sport = "{user_sport}"\
                 group by r.room_no having count(*);'
         elif place:
             sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
-                where r.room_place = "{mark_place}"\
+                where r.room_place = "{user_place}"\
                 group by r.room_no having count(*);'
         else :
             sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
