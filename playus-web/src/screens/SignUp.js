@@ -103,7 +103,7 @@ function SingUp() {
     // 세가지 중복체크가 true 이면 회원가입 가능
     if (id && mail && phone === true) {
       // signUp
-      const { createAccount } = signUp({
+      signUp({
         user_name,
         user_pw,
         user_phone,
