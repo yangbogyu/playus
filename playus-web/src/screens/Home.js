@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Nav/Navbar";
+import { Tabs, Tab } from "react-bootstrap";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -34,6 +36,7 @@ const Icon = styled.div`
 `;
 
 export default function Home() {
+  const [key, setKey] = useState("home");
   return (
     <div>
       <Navbar />

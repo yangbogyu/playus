@@ -35,6 +35,8 @@ class CreateAccount(Resource):
         user_pw = data['user_pw']
         user_phone = data['user_phone']
         user_mail = data['user_mail']
+        user_sport = data['user_sport']
+        user_place = data['user_place']
 
         # id 체크
         base = db.cursor()
@@ -72,7 +74,7 @@ class CreateAccount(Resource):
         # db값 저장
         base = db.cursor()
         sql = f'insert into User(user_name, user_pw, user_phone, user_mail)\
-                values ("{user_name}", "{user_bcrypt}", "{user_phone}", "{user_mail}");'
+                values ("{user_name}", "{user_bcrypt}", "{user_phone}", "{user_mail}", "{user_sport}", "{user_place}");'
         base.execute(sql)
         db.commit()
         base.close()

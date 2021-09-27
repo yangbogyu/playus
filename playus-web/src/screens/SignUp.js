@@ -22,10 +22,12 @@ const Logo = styled.img`
 `;
 
 function SingUp() {
+  // react hooks
   const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
 
+  // 유저이름 중복체크 fetch
   const checkUsername = async ({ user_name }) => {
     const ok = await fetch(
       `http://localhost:5000/createAccounts/IDCheck/${user_name}`
@@ -33,6 +35,7 @@ function SingUp() {
     return ok;
   };
 
+  // 이메일 중복체크 fetch
   const checkEmail = async ({ user_mail }) => {
     const ok = await fetch(
       `http://localhost:5000/createAccounts/mailCheck/${user_mail}`
@@ -40,6 +43,7 @@ function SingUp() {
     return ok;
   };
 
+  // 핸드폰번호 중복체크 fetch
   const checkPhone = async ({ user_phone }) => {
     const ok = await fetch(
       `http://localhost:5000/createAccounts/phoneCheck/${user_phone}`
@@ -47,7 +51,14 @@ function SingUp() {
     return ok;
   };
 
-  const signUp = async ({ user_name, user_pw, user_phone, user_mail }) => {
+  // 회원가입 fetch
+  const signUp = async ({
+    user_name,
+    user_pw,
+    user_phone,
+    user_mail,
+    user_place,
+  }) => {
     const ok = await fetch("http://localhost:5000/createAccounts", {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -56,30 +67,39 @@ function SingUp() {
         user_pw,
         user_phone,
         user_mail,
+        user_place,
       }),
     }).then((res) => res.json());
     return ok;
   };
 
+  // 회원가입 버튼 클릭시 중복체크 확인 후 회원가입
   const onSubmitValid = async ({
     user_name,
     user_pw,
     user_phone,
     user_mail,
+    user_place,
   }) => {
+    // 중복체크 가능 여부 확인
     const { id } = await checkUsername({ user_name });
     const { mail } = await checkEmail({ user_mail });
     const { phone } = await checkPhone({ user_phone });
 
+    // 세가지 중복체크가 true 이면 회원가입 가능
     if (id && mail && phone === true) {
+      // signUp
       const { createAccount } = signUp({
         user_name,
         user_pw,
         user_phone,
         user_mail,
+        user_place,
       });
+      // 리턴 true 이면 회원가입 성공
       if ({ createAccount } === true) {
         alert("I've created an account");
+        // 리턴 false 이면 회원가입 실패
       } else {
         alert("You can't sign up as a member. Try again");
       }
@@ -133,8 +153,8 @@ function SingUp() {
             placeholder="Email"
             hasError={Boolean(errors?.user_mail?.message)}
           />
-
           <FormError message={errors?.user_mail?.message} />
+          <Input name="user_place" type="text" placeholder="Favorite Place" />
           <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
         </form>
       </FormBox>
