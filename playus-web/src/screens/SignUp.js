@@ -57,8 +57,10 @@ function SingUp() {
     user_pw,
     user_phone,
     user_mail,
+    user_sport,
     user_place,
   }) => {
+    console.log(user_sport, user_place);
     const ok = await fetch("http://localhost:5000/createAccounts", {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -67,6 +69,7 @@ function SingUp() {
         user_pw,
         user_phone,
         user_mail,
+        user_sport,
         user_place,
       }),
     }).then((res) => res.json());
@@ -79,12 +82,23 @@ function SingUp() {
     user_pw,
     user_phone,
     user_mail,
+    user_sport,
     user_place,
   }) => {
     // 중복체크 가능 여부 확인
     const { id } = await checkUsername({ user_name });
     const { mail } = await checkEmail({ user_mail });
     const { phone } = await checkPhone({ user_phone });
+
+    // undefined한 값들 null로 변환
+    if (user_sport || user_place == undefined) {
+      if (user_sport == undefined) {
+        user_sport = null;
+      }
+      if (user_place == undefined) {
+        user_place = null;
+      }
+    }
 
     // 세가지 중복체크가 true 이면 회원가입 가능
     if (id && mail && phone === true) {
@@ -94,15 +108,14 @@ function SingUp() {
         user_pw,
         user_phone,
         user_mail,
+        user_sport,
         user_place,
       });
       // 리턴 true 이면 회원가입 성공
-      if ({ createAccount } === true) {
-        alert("I've created an account");
-        // 리턴 false 이면 회원가입 실패
-      } else {
-        alert("You can't sign up as a member. Try again");
-      }
+      alert("I've created an account");
+      // 리턴 false 이면 회원가입 실패
+    } else {
+      alert("You can't sign up as a member. Try again");
     }
   };
 
@@ -154,6 +167,7 @@ function SingUp() {
             hasError={Boolean(errors?.user_mail?.message)}
           />
           <FormError message={errors?.user_mail?.message} />
+          <Input name="user_sport" type="text" placeholder="Favorite Sport" />
           <Input name="user_place" type="text" placeholder="Favorite Place" />
           <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
         </form>

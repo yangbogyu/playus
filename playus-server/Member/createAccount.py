@@ -73,7 +73,7 @@ class CreateAccount(Resource):
 
         # db값 저장
         base = db.cursor()
-        sql = f'insert into User(user_name, user_pw, user_phone, user_mail)\
+        sql = f'insert into User(user_name, user_pw, user_phone, user_mail, user_sport, user_place)\
                 values ("{user_name}", "{user_bcrypt}", "{user_phone}", "{user_mail}", "{user_sport}", "{user_place}");'
         base.execute(sql)
         db.commit()
