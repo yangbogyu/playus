@@ -111,9 +111,7 @@ function SingUp() {
         user_sport,
         user_place,
       });
-      // 리턴 true 이면 회원가입 성공
       alert("I've created an account");
-      // 리턴 false 이면 회원가입 실패
     } else {
       alert("You can't sign up as a member. Try again");
     }
