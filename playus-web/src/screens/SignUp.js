@@ -88,7 +88,19 @@ function SingUp() {
     const { id } = await checkUsername({ user_name });
     const { mail } = await checkEmail({ user_mail });
     const { phone } = await checkPhone({ user_phone });
+    console.log(user_name,user_mail,user_phone,user_sport, user_place);
 
+<<<<<<< HEAD
+=======
+    // undefined한 값들 null로 변환
+    if (user_sport == undefined) {
+      user_sport = null;
+    }
+    if (user_place == undefined) {
+      user_place = null;
+    }
+
+>>>>>>> d5a63680520feb6569cd6c33a6274011be85f88a
     // 세가지 중복체크가 true 이면 회원가입 가능
     if (id && mail && phone === true) {
       // signUp
