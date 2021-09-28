@@ -60,7 +60,6 @@ function SingUp() {
     user_sport,
     user_place,
   }) => {
-    console.log(user_sport, user_place);
     const ok = await fetch("http://localhost:5000/createAccounts", {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -89,16 +88,6 @@ function SingUp() {
     const { id } = await checkUsername({ user_name });
     const { mail } = await checkEmail({ user_mail });
     const { phone } = await checkPhone({ user_phone });
-
-    // undefined한 값들 null로 변환
-    if (user_sport || user_place == undefined) {
-      if (user_sport == undefined) {
-        user_sport = null;
-      }
-      if (user_place == undefined) {
-        user_place = null;
-      }
-    }
 
     // 세가지 중복체크가 true 이면 회원가입 가능
     if (id && mail && phone === true) {
@@ -165,8 +154,22 @@ function SingUp() {
             hasError={Boolean(errors?.user_mail?.message)}
           />
           <FormError message={errors?.user_mail?.message} />
-          <Input name="user_sport" type="text" placeholder="Favorite Sport" />
-          <Input name="user_place" type="text" placeholder="Favorite Place" />
+          <Input
+            ref={register({
+              required: false,
+            })}
+            name="user_sport"
+            type="text"
+            placeholder="Favorite Sport"
+          />
+          <Input
+            ref={register({
+              required: false,
+            })}
+            name="user_place"
+            type="text"
+            placeholder="Favorite Place"
+          />
           <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
         </form>
       </FormBox>

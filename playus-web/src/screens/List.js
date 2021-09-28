@@ -1,4 +1,4 @@
-import BottomTabs from "../components/Tabs/BottomTabs";
+import BottomTabs from "../components/main/BottomTabs";
 
 function List() {
   return (

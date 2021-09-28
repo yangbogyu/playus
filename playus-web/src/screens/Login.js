@@ -53,7 +53,7 @@ function Login() {
     if (login === true) {
       logUserIn(user_name);
     } else if (login === false) {
-      alert("Please enter your 'Usernaem' and 'Password' correctly.");
+      alert("Please enter your 'Username' and 'Password' correctly.");
     }
   };
 
