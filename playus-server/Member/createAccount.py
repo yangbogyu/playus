@@ -41,11 +41,11 @@ class CreateAccount(Resource):
         print(user_sport, user_place)
 
         # 스포츠, 지역 null확인
-        if user_sport == None and user_place == None :
+        if user_sport == "" and user_place == "" :
             setSQL = 'null, null'
-        elif user_sport == None:
+        elif user_sport == "":
             setSQL = f'null, "{user_place}"'
-        elif user_place == None :
+        elif user_place == "" :
             setSQL = f'"{user_sport}",null'
         else :
             setSQL = f'"{user_sport}", "{user_place}"'

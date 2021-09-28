@@ -29,11 +29,11 @@ function App() {
                 <SignUp />
               </Route>
             ) : null}
-            <Route path="/list">
-              <List />
+            <Route path={routes.list}>
+              {isLoggedIn ? <List /> : <Login />}
             </Route>
-            <Route path="/user">
-              <User />
+            <Route path={routes.user}>
+              {isLoggedIn ? <User /> : <Login />}
             </Route>
             <Route>
               <NotFound />

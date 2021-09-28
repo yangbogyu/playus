@@ -1,9 +1,11 @@
+import { Button, Modal } from "react-bootstrap";
 import BottomTabs from "../components/main/BottomTabs";
+import Header from "../components/main/Header";
 
 function List() {
   return (
     <div>
-      <h1>List</h1>
+      <Header />
       <BottomTabs />
     </div>
   );

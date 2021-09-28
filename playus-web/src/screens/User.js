@@ -1,9 +1,10 @@
 import BottomTabs from "../components/main/BottomTabs";
+import Header from "../components/main/Header";
 
 function User() {
   return (
     <div>
-      <h1>User</h1>
+      <Header />
       <BottomTabs />
     </div>
   );

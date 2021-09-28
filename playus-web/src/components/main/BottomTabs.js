@@ -33,7 +33,7 @@ const TabTitle = styled.h1`
 export default function BottomTabs() {
   return (
     <Place>
-      <Nav justify variant="tabs" defaultActiveKey="/home">
+      <Nav justify variant="tabs">
         <Nav.Item>
           <Nav.Link href="/">
             <Tabicon>
