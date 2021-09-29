@@ -20,7 +20,7 @@ api = Api(  # API 서버로 사용할 수 있게해줌.
     version='0.1',
     title="Playus API Server",
     description="AIP 사용설명서.",
-    terms_url="https://www.notion.so/API-8a06211b8ff945849dddf4de3f94f697",
+    terms_url="https://special-hotel-226.notion.site/18053b3d090048119f12d33cdbe86e60?v=325d474f48a44c01b503a60e98f016e0",
     license="신구대학교 IT소프트웨어과 Playus API")
 
 api.add_namespace(login, '/logins')

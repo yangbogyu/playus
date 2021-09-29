@@ -12,11 +12,11 @@ db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     passwd=os.getenv('MYSQL_PASSWORD'),
                     db=os.getenv('MYSQL_DATABASE'),
                     charset=os.getenv('MYSQL_CHARSET'),
-                    cursorclass=pymysql.cursors.DictCursor)\
+                    cursorclass=pymysql.cursors.DictCursor)
 
 deleteRoom = Namespace(
     name='deleteRoom',
-    description='Room API'
+    description='deleteRoom API'
 )
 
 

@@ -12,11 +12,11 @@ db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     passwd=os.getenv('MYSQL_PASSWORD'),
                     db=os.getenv('MYSQL_DATABASE'),
                     charset=os.getenv('MYSQL_CHARSET'),
-                    cursorclass=pymysql.cursors.DictCursor)\
+                    cursorclass=pymysql.cursors.DictCursor)
 
 seeRoom = Namespace(
     name='seeRoom',
-    description='Room API'
+    description='seeRoom API'
 )
 
 @seeRoom.route('/<string:user_name>')
@@ -25,7 +25,7 @@ class Room(Resource):
         '''방 리스트'''
 
         base = db.cursor()
-        sql = f'select user_sport, user_place from user\
+        sql = f'select user_sport, user_place from User\
                 where user_name = "{user_name}";'
         base.execute(sql)
         mark = base.fetchall()

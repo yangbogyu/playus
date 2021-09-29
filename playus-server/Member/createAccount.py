@@ -17,7 +17,7 @@ db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                      passwd=os.getenv('MYSQL_PASSWORD'),
                      db=os.getenv('MYSQL_DATABASE'),
                      charset=os.getenv('MYSQL_CHARSET'),
-                     cursorclass=pymysql.cursors.DictCursor)\
+                     cursorclass=pymysql.cursors.DictCursor)
 
 Create = Namespace(
     name='createAccount',
@@ -78,6 +78,7 @@ class CreateAccount(Resource):
                     where user_mail = "{user_mail}";'
                 base.execute(sql)
                 mail = base.fetchall()
+                base.close()
                 if mail:
                     return {'mail': False}
 
