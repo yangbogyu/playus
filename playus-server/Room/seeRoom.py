@@ -11,13 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # `.env`파일 불러옴
 
-db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                    port=int(os.getenv('MYSQL_PORT')),
-                    user=os.getenv('MYSQL_USER'),
-                    passwd=os.getenv('MYSQL_PASSWORD'),
-                    db=os.getenv('MYSQL_DATABASE'),
-                    charset=os.getenv('MYSQL_CHARSET'),
-                    cursorclass=pymysql.cursors.DictCursor)
+
 
 seeRoom = Namespace(
     name='seeRoom',
@@ -30,6 +24,13 @@ class Room(Resource):
     def get(self, user_name):
         '''방 리스트'''
 
+        db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
+                    port=int(os.getenv('MYSQL_PORT')),
+                    user=os.getenv('MYSQL_USER'),
+                    passwd=os.getenv('MYSQL_PASSWORD'),
+                    db=os.getenv('MYSQL_DATABASE'),
+                    charset=os.getenv('MYSQL_CHARSET'),
+                    cursorclass=pymysql.cursors.DictCursor)
         base = db.cursor()
         sql = f'select user_sport, user_place from User\
                 where user_name = "{user_name}";'
@@ -44,7 +45,6 @@ class Room(Resource):
             for i in mark:
                 user_sport = i['user_sport'] # 종목
                 user_place = i['user_place'] # 장소
-        print(user_sport, user_place)
         
         # where문
         where_sql = False
@@ -54,15 +54,15 @@ class Room(Resource):
             where_sql = f'where r.room_sport = "{user_sport}"'
         elif user_sport == None and user_place != None:
             where_sql = f'where r.room_place = "{user_place}"'
-        
-        if where_sql != True:    
-            sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+
+        if where_sql == False:    
+            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
                 group by r.room_no having count(*);'
         else:
-            sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no {where_sql}\
@@ -72,5 +72,5 @@ class Room(Resource):
         base.execute(sql)
         data = base.fetchall()
         for i in data:
-            i['room_time'] = str(i['room_time'])
+            i['room_time'] = str(i['room_time']) # dataTime -> str 변경
         return {'Rooms' : data}
