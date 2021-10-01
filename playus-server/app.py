@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 from Member.login import login
 from Member.createAccount import Create
 from Member.updateStar import updateStar
+from Member.seeMark import seeMark
 
 from Room.seeRoom import seeRoom
 from Room.createRoom import createRoom
@@ -26,6 +27,7 @@ api = Api(  # API 서버로 사용할 수 있게해줌.
 api.add_namespace(login, '/logins')
 api.add_namespace(Create, '/createAccounts')
 api.add_namespace(updateStar, '/updateStars')
+api.add_namespace(seeMark, '/seeMarks')
 
 api.add_namespace(seeRoom, '/seeRooms')
 api.add_namespace(createRoom, '/createRooms')
