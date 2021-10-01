@@ -10,10 +10,17 @@ import {
   faBasketballBall,
 } from "@fortawesome/free-solid-svg-icons";
 
+const PPlace = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Place = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
+  max-width: 930px;
 `;
 
 const Tabicon = styled.div`
@@ -32,45 +39,47 @@ const TabTitle = styled.h1`
 
 export default function BottomTabs() {
   return (
-    <Place>
-      <Nav justify variant="tabs">
-        <Nav.Item>
-          <Nav.Link href="/">
-            <Tabicon>
-              <FontAwesomeIcon
-                icon={faBasketballBall}
-                size="lg"
-                color="rgb(38, 38, 38)"
-              />
-              <TabTitle>메인화면</TabTitle>
-            </Tabicon>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/list">
-            <Tabicon>
-              <FontAwesomeIcon
-                icon={faList}
-                size="lg"
-                color="rgb(38, 38, 38)"
-              />
-              <TabTitle>방리스트</TabTitle>
-            </Tabicon>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/user">
-            <Tabicon>
-              <FontAwesomeIcon
-                icon={faUser}
-                size="lg"
-                color="rgb(38, 38, 38)"
-              />
-              <TabTitle>내정보</TabTitle>
-            </Tabicon>
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
-    </Place>
+    <PPlace>
+      <Place>
+        <Nav justify variant="tabs">
+          <Nav.Item>
+            <Nav.Link href="/">
+              <Tabicon>
+                <FontAwesomeIcon
+                  icon={faBasketballBall}
+                  size="lg"
+                  color="rgb(38, 38, 38)"
+                />
+                <TabTitle>메인화면</TabTitle>
+              </Tabicon>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/list">
+              <Tabicon>
+                <FontAwesomeIcon
+                  icon={faList}
+                  size="lg"
+                  color="rgb(38, 38, 38)"
+                />
+                <TabTitle>방리스트</TabTitle>
+              </Tabicon>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/user">
+              <Tabicon>
+                <FontAwesomeIcon
+                  icon={faUser}
+                  size="lg"
+                  color="rgb(38, 38, 38)"
+                />
+                <TabTitle>내정보</TabTitle>
+              </Tabicon>
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Place>
+    </PPlace>
   );
 }
