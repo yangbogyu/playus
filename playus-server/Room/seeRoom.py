@@ -1,23 +1,29 @@
 from logging import fatal
-import os, pymysql, json, datetime, bcrypt, jwt
+import os
+import pymysql
+import json
+import datetime
+import bcrypt
+import jwt
 from flask import request
 from flask_restx import Resource, Api, Namespace
 from dotenv import load_dotenv
 
-load_dotenv() # `.env`파일 불러옴
+load_dotenv()  # `.env`파일 불러옴
 
 db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                    port=int(os.getenv('MYSQL_PORT')),
-                    user=os.getenv('MYSQL_USER'),
-                    passwd=os.getenv('MYSQL_PASSWORD'),
-                    db=os.getenv('MYSQL_DATABASE'),
-                    charset=os.getenv('MYSQL_CHARSET'),
-                    cursorclass=pymysql.cursors.DictCursor)\
+                     port=int(os.getenv('MYSQL_PORT')),
+                     user=os.getenv('MYSQL_USER'),
+                     passwd=os.getenv('MYSQL_PASSWORD'),
+                     db=os.getenv('MYSQL_DATABASE'),
+                     charset=os.getenv('MYSQL_CHARSET'),
+                     cursorclass=pymysql.cursors.DictCursor)\
 
 seeRoom = Namespace(
     name='seeRoom',
     description='Room API'
 )
+
 
 @seeRoom.route('/<string:user_name>')
 class Room(Resource):
@@ -42,11 +48,11 @@ class Room(Resource):
 
         if user_sport == None:
             sport = True
-        else :
+        else:
             sport = False
         if user_place == None:
             place = True
-        else :
+        else:
             place = False
 
         
@@ -71,13 +77,13 @@ class Room(Resource):
                 on u.room_no = r.room_no\
                 where r.room_place = "{user_place}"\
                 group by r.room_no having count(*);'
-        else :
+        else:
             sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
                 group by r.room_no having count(*);'
-                
+
         base = db.cursor()
         base.execute(sql)
         data = base.fetchall()
