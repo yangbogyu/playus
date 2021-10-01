@@ -37,24 +37,25 @@ class Room(Resource):
         mark = base.fetchall()
         base.close()
 
+        user_sport, user_place = None, None
+
         # 값 받아서 저장
         if mark:
             for i in mark:
-                user_sport = i['user_sport']  # 종목
-                user_place = i['user_place']  # 장소
-        else:
-            user_sport = False
-            user_place = False
+                user_sport = i['user_sport'] # 종목
+                user_place = i['user_place'] # 장소
+        print(user_sport, user_place)
 
-        if user_sport:
+        if user_sport == None:
             sport = True
         else:
             sport = False
-        if user_place:
+        if user_place == None:
             place = True
         else:
             place = False
 
+        
         if sport and place:
             sql = f'select r.room_no, r.room_title, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
@@ -88,4 +89,4 @@ class Room(Resource):
         data = base.fetchall()
         for i in data:
             i['room_time'] = str(i['room_time'])
-        return {'Rooms': data}
+        return {'Rooms' : data}
