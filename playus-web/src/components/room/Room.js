@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { useEffect } from "react";
 import RoomDetail from "./RoomDetail";
 
 const RoomContainer = styled.div`
@@ -41,7 +41,20 @@ const RoomButton = styled.span`
   margin-right: 10px;
 `;
 
-function Room() {
+function Room(me) {
+  const seeRoom = async () => {
+    const list = await fetch(`http://localhost:5000/seeRooms/${me}`).then(
+      (res) => res.json()
+    );
+    console.log(me);
+    console.log(list);
+    return list;
+  };
+
+  useEffect(() => {
+    seeRoom();
+  }, []);
+
   return (
     <RoomContainer>
       <RoomBox>
