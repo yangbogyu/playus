@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const MarkContainer = styled.div`
   display: flex;
@@ -10,30 +10,31 @@ const MarkContainer = styled.div`
   max-width: 930px;
 `;
 
-const MarkPlace = styled.h1`
+const MarkPlace = styled.span`
+  margin-top: 1px;
   font-weight: 600;
   color: rgb(38, 38, 38);
   margin-left: 4px;
 `;
 
-export default function Mark() {
-  const seeMark = async () => {
-    const me = localStorage.getItem("LOGIN");
-    const mark = await fetch(`http://localhost:5000/seeMarks/${me}`)
-      .then((res) => res.json())
-      .then(({ Mark }) => {
-        return Mark[0].user_sport;
-      });
-  };
+export default function Mark({ ami }) {
+  const [place, setPlace] = useState();
 
   useEffect(() => {
-    seeMark();
+    fetch(`http://localhost:5000/seeMarks/${ami}`)
+      .then((res) => res.json())
+      .then(({ Mark }) => {
+        {
+          Mark.user_place ? setPlace(Mark.user_place) : setPlace("NULL");
+        }
+      });
   }, []);
 
   return (
     <MarkContainer>
       <FontAwesomeIcon icon={faLocationArrow} />
-      <MarkPlace value={seeMark()} />
+
+      <MarkPlace>{place}</MarkPlace>
     </MarkContainer>
   );
 }

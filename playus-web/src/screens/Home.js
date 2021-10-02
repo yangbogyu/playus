@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BottomTabs from "../components/main/BottomTabs";
 import Header from "../components/main/Header";
@@ -14,13 +14,22 @@ const Container = styled.div`
 
 function Home() {
   const me = localStorage.getItem("LOGIN");
+  const [seeRoom, setSeeRoom] = useState();
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/seeRooms/${me}`)
+      .then((res) => res.json())
+      .then(({ Rooms }) => {
+        setSeeRoom(Rooms);
+      });
+  }, []);
 
   return (
     <div>
       <Header />
       <Container>
-        <Mark />
-        <Room ami={me} />
+        <Mark ami={me} />
+        <Room {...seeRoom} />
       </Container>
       <BottomTabs />
     </div>

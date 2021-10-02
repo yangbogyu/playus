@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RoomDetail from "./RoomDetail";
+import PropTypes from "prop-types";
 
 const RoomContainer = styled.div`
   max-width: 615px;
@@ -18,7 +19,7 @@ const RoomContainer = styled.div`
   }
 `;
 
-const RoomBox = styled.div`
+const RoomContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,31 +42,19 @@ const RoomButton = styled.span`
   margin-right: 10px;
 `;
 
-function Room(me) {
-  const seeRoom = async () => {
-    const list = await fetch(`http://localhost:5000/seeRooms/${me}`).then(
-      (res) => res.json()
-    );
-    console.log(me);
-    console.log(list);
-    return list;
-  };
-
-  useEffect(() => {
-    seeRoom();
-  }, []);
-
+function Room(props) {
   return (
     <RoomContainer>
-      <RoomBox>
-        <RoomText>제목</RoomText>
-        <RoomText>시간</RoomText>
-        <RoomText>장소</RoomText>
-      </RoomBox>
+      <RoomContent>
+        <RoomText></RoomText>
+        <RoomText></RoomText>
+        <RoomText></RoomText>
+      </RoomContent>
       <RoomButton>
         <RoomDetail />
       </RoomButton>
     </RoomContainer>
   );
 }
+
 export default Room;
