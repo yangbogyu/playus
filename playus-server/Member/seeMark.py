@@ -30,5 +30,7 @@ class See(Resource):
         base.execute(sql)
         mark = base.fetchall()
         base.close()
+        user_sport = mark[0]["user_sport"]
+        user_place = mark[0]["user_place"]
 
-        return {"Mark" : mark}
+        return {"Mark" : {"user_sport" : user_sport, "user_place" : user_place}}
