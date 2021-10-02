@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import RoomDetail from "./RoomDetail";
 import PropTypes from "prop-types";
+import { responsePathAsArray } from "graphql";
 
 const RoomContainer = styled.div`
   max-width: 615px;
@@ -9,10 +10,9 @@ const RoomContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px;
+  margin: 10px;
   border-radius: 4px;
   border: 1px solid ${(props) => props.theme.borderColor};
-  margin-bottom: 60px;
 
   @media screen and (max-width: 615px) {
     max-width: 450px;
@@ -42,16 +42,21 @@ const RoomButton = styled.span`
   margin-right: 10px;
 `;
 
-function Room(props) {
+function Room({ room }) {
+  const [roomTime, setroomTime] = useState();
+  useEffect(() => {
+    console.log(room.room_time);
+  }, []);
+
   return (
     <RoomContainer>
       <RoomContent>
-        <RoomText></RoomText>
-        <RoomText></RoomText>
-        <RoomText></RoomText>
+        <RoomText>{room.room_title}</RoomText>
+        <RoomText>{room.room_place}</RoomText>
+        <RoomText>{room.room_time}</RoomText>
       </RoomContent>
       <RoomButton>
-        <RoomDetail />
+        <RoomDetail room={room} />
       </RoomButton>
     </RoomContainer>
   );

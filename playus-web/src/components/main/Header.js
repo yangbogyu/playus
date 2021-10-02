@@ -6,7 +6,7 @@ import { logUserout } from "../../apollo";
 
 const SHeader = styled.header`
   width: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.borderColor};
+
   background-color: ${(props) => props.theme.bgColor};
   padding: 15px 0px;
   display: flex;

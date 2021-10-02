@@ -8,6 +8,7 @@ const MarkContainer = styled.div`
   align-items: center;
   margin-top: 20px;
   max-width: 930px;
+  margin-bottom: 10px;
 `;
 
 const MarkPlace = styled.span`

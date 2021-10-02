@@ -31,7 +31,7 @@ const SignUp = styled.div`
 `;
 
 function Login() {
-  const { register, handleSubmit, errors, formState, setError } = useForm({
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
 

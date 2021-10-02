@@ -2,7 +2,7 @@ import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function RoomDetail() {
+export default function RoomDetail({ room }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

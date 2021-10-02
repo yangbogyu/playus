@@ -5,11 +5,17 @@ import Header from "../components/main/Header";
 import Mark from "../components/main/Mark";
 import Room from "../components/room/Room";
 
+const F = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 60px;
 `;
 
 function Home() {
@@ -25,14 +31,17 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <F>
       <Header />
+
       <Container>
         <Mark ami={me} />
-        <Room {...seeRoom} />
+        {seeRoom?.map((room) => (
+          <Room room={room} key={room.room_no} />
+        ))}
       </Container>
       <BottomTabs />
-    </div>
+    </F>
   );
 }
 export default Home;
