@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
 import RoomDetail from "./RoomDetail";
-import PropTypes from "prop-types";
-import { responsePathAsArray } from "graphql";
 
 const RoomContainer = styled.div`
   max-width: 615px;
@@ -43,11 +40,6 @@ const RoomButton = styled.span`
 `;
 
 function Room({ room }) {
-  const [roomTime, setroomTime] = useState();
-  useEffect(() => {
-    console.log(room.room_time);
-  }, []);
-
   return (
     <RoomContainer>
       <RoomContent>
@@ -56,7 +48,7 @@ function Room({ room }) {
         <RoomText>{room.room_time}</RoomText>
       </RoomContent>
       <RoomButton>
-        <RoomDetail room={room} />
+        <RoomDetail info={room} />
       </RoomButton>
     </RoomContainer>
   );

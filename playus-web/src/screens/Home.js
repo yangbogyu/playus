@@ -5,11 +5,6 @@ import Header from "../components/main/Header";
 import Mark from "../components/main/Mark";
 import Room from "../components/room/Room";
 
-const F = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -31,7 +26,7 @@ function Home() {
   }, []);
 
   return (
-    <F>
+    <div>
       <Header />
 
       <Container>
@@ -41,7 +36,7 @@ function Home() {
         ))}
       </Container>
       <BottomTabs />
-    </F>
+    </div>
   );
 }
 export default Home;

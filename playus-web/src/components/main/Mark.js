@@ -12,7 +12,7 @@ const MarkContainer = styled.div`
 `;
 
 const MarkPlace = styled.span`
-  margin-top: 1px;
+  margin-top: 2px;
   font-weight: 600;
   color: rgb(38, 38, 38);
   margin-left: 4px;
@@ -25,8 +25,10 @@ export default function Mark({ ami }) {
     fetch(`http://localhost:5000/seeMarks/${ami}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
+        console.log(Mark);
+        console.log(ami);
         {
-          Mark.user_place ? setPlace(Mark.user_place) : setPlace("NULL");
+          Mark.user_place ? setPlace(Mark.user_place) : setPlace("미설정");
         }
       });
   }, []);
