@@ -28,11 +28,10 @@ function Home() {
   return (
     <div>
       <Header />
-
       <Container>
         <Mark ami={me} />
         {seeRoom?.map((room) => (
-          <Room room={room} key={room.room_no} />
+          <Room key={room.room_no} {...room} />
         ))}
       </Container>
       <BottomTabs />

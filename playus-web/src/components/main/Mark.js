@@ -25,8 +25,6 @@ export default function Mark({ ami }) {
     fetch(`http://localhost:5000/seeMarks/${ami}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
-        console.log(Mark);
-        console.log(ami);
         {
           Mark.user_place ? setPlace(Mark.user_place) : setPlace("미설정");
         }
