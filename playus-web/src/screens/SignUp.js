@@ -109,9 +109,9 @@ function SingUp() {
         user_sport,
         user_place,
       });
-      alert("success!");
+      alert("Success!");
     } else {
-      alert("You can't sign up as a member. Try again");
+      alert("Try again!");
     }
   };
 

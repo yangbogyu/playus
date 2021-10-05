@@ -66,11 +66,10 @@ function Room({
     })
       .then((res) => res.json())
       .then(({ inRoom }) => {
-        console.log(inRoom);
         if (inRoom === false) {
-          <Alert severity="error">
-            This is an error alert — check it out!
-          </Alert>;
+          alert("이미 참가한 방입니다.");
+        } else {
+          alert("참가 성공");
         }
         return inRoom;
       });
