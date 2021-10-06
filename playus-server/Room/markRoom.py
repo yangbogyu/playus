@@ -11,18 +11,15 @@ from dotenv import load_dotenv
 
 load_dotenv()  # `.env`파일 불러옴
 
-
-
 markRoom = Namespace(
     name='markRoom',
     description='markRoom API'
 )
 
-
-@markRoom.route('/master/<string:user_name>')
-class MarkMaster(Resource):
+@markRoom.route('/<string:user_name>')
+class Mark(Resource):
     def get(self, user_name):
-        '''내가 만든 방 리스트'''
+        '''방 리스트'''
 
         db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     port=int(os.getenv('MYSQL_PORT')),
@@ -31,31 +28,41 @@ class MarkMaster(Resource):
                     db=os.getenv('MYSQL_DATABASE'),
                     charset=os.getenv('MYSQL_CHARSET'),
                     cursorclass=pymysql.cursors.DictCursor)
-        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name\
+        base = db.cursor()
+        sql = f'select user_sport, user_place from User\
+                where user_name = "{user_name}";'
+        base.execute(sql)
+        mark = base.fetchall()
+        base.close()
+
+        user_sport, user_place = None, None
+
+        # 값 받아서 저장
+        if mark:
+            for i in mark:
+                user_sport = i['user_sport'] # 종목
+                user_place = i['user_place'] # 장소
+        
+        # where문
+        where_sql = False
+        if user_sport != None and user_place != None:
+            where_sql = f'where r.room_sport = "{user_sport}" and r.room_place = "{user_place}"'
+        elif user_sport != None and user_place == None:
+            where_sql = f'where r.room_sport = "{user_sport}"'
+        elif user_sport == None and user_place != None:
+            where_sql = f'where r.room_place = "{user_place}"'
+
+        if where_sql == False:    
+            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
-                where u.user_name = "{user_name}" and u.user_static = "M";'
-
-        base = db.cursor()
-        base.execute(sql)
-        data = base.fetchall()
-        base.close()
-
-        if data:
-            wherelist = []
-            whereSQL = 'where r.room_no = '
-            for i in data:
-                wherelist.append(str(i['room_no']))
-            whereSQL = whereSQL + " or r.room_no = ".join(wherelist)
-            print(whereSQL)
+                group by r.room_no having count(*);'
         else:
-            return {'MasterRooms' : False}
-        
-        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
-                on u.room_no = r.room_no {whereSQL}\
+                on u.room_no = r.room_no {where_sql}\
                 group by r.room_no having count(*);'
 
         base = db.cursor()
@@ -64,50 +71,5 @@ class MarkMaster(Resource):
         base.close()
         for i in data:
             i['room_time'] = str(i['room_time']) # dataTime -> str 변경
-        return {'MasterRooms' : data}
+        return {'MarkRooms' : data}
 
-@markRoom.route('/people/<string:user_name>')
-class MarkPeople(Resource):
-    def get(self, user_name):
-        '''참여한 방 리스트'''
-
-        db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                    port=int(os.getenv('MYSQL_PORT')),
-                    user=os.getenv('MYSQL_USER'),
-                    passwd=os.getenv('MYSQL_PASSWORD'),
-                    db=os.getenv('MYSQL_DATABASE'),
-                    charset=os.getenv('MYSQL_CHARSET'),
-                    cursorclass=pymysql.cursors.DictCursor)
-        sql = f'select r.room_no from Room as r\
-                right outer join Room_user as u\
-                on u.room_no = r.room_no\
-                where u.user_name = "{user_name}" and u.user_static = "P";'
-
-        base = db.cursor()
-        base.execute(sql)
-        data = base.fetchall()
-        base.close()
-
-        if data:
-            wherelist = []
-            whereSQL = 'where r.room_no = '
-            for i in data:
-                wherelist.append(str(i['room_no']))
-            whereSQL = whereSQL + " or r.room_no = ".join(wherelist)
-            print(whereSQL)
-        else:
-            return {'MasterRooms' : False}
-        
-        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
-                from Room as r\
-                right outer join Room_user as u\
-                on u.room_no = r.room_no {whereSQL}\
-                group by r.room_no having count(*);'
-
-        base = db.cursor()
-        base.execute(sql)
-        data = base.fetchall()
-        base.close()
-        for i in data:
-            i['room_time'] = str(i['room_time']) # dataTime -> str 변경
-        return {'MasterRooms' : data}
