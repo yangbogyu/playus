@@ -88,13 +88,12 @@ function SingUp() {
     const { id } = await checkUsername({ user_name });
     const { mail } = await checkEmail({ user_mail });
     const { phone } = await checkPhone({ user_phone });
-    console.log(user_name, user_mail, user_phone, user_sport, user_place);
 
     // undefined한 값들 null로 변환
-    if (user_sport || user_place == undefined) {
-      if (user_sport == undefined) {
+    if (user_sport || user_place === undefined) {
+      if (user_sport === undefined) {
         user_sport = "";
-      } else if (user_place == undefined) {
+      } else if (user_place === undefined) {
         user_place = "";
       }
     }
@@ -110,9 +109,9 @@ function SingUp() {
         user_sport,
         user_place,
       });
-      alert("I've created an account");
+      alert("Success!");
     } else {
-      alert("You can't sign up as a member. Try again");
+      alert("Try again!");
     }
   };
 

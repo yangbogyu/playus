@@ -1,55 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BottomTabs from "../components/main/BottomTabs";
 import Header from "../components/main/Header";
+import Mark from "../components/main/Mark";
 import Room from "../components/room/Room";
-import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-`;
-
-const MarkContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  max-width: 930px;
-`;
-
-const MarkPlace = styled.span`
-  font-weight: 600;
-  color: rgb(38, 38, 38);
-  margin-left: 4px;
+  padding-bottom: 60px;
 `;
 
 function Home() {
-  const seeRoom = async () => {
-    const me = localStorage.getItem("LOGIN");
-    const list = await fetch(`http://localhost:5000/seeRooms/${me}`).then(
-      (res) => res.json()
-    );
-    console.log(me);
-    console.log(list);
-    return list;
-  };
+  const me = localStorage.getItem("LOGIN");
+  const [seeRoom, setSeeRoom] = useState();
 
   useEffect(() => {
-    seeRoom();
+    fetch(`http://localhost:5000/seeRooms/${me}`)
+      .then((res) => res.json())
+      .then(({ Rooms }) => {
+        setSeeRoom(Rooms);
+      });
   }, []);
 
   return (
     <div>
       <Header />
       <Container>
-        <MarkContainer>
-          <FontAwesomeIcon icon={faLocationArrow} />
-          <MarkPlace>송파구</MarkPlace>
-        </MarkContainer>
-        <Room />
+        <Mark ami={me} />
+        {seeRoom?.map((room) => (
+          <Room key={room.room_no} {...room} />
+        ))}
       </Container>
       <BottomTabs />
     </div>

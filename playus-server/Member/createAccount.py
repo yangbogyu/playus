@@ -35,23 +35,19 @@ class CreateAccount(Resource):
         user_pw = data['user_pw']
         user_phone = data['user_phone']
         user_mail = data['user_mail']
-        user_sport = data['user_sport'] 
+        user_sport = data['user_sport']
         user_place = data['user_place']
 
-        print(user_sport, user_place)
-
         # 스포츠, 지역 null확인
-        if user_sport == "" and user_place == "" :
+        if user_sport == "" and user_place == "":
             setSQL = 'null, null'
         elif user_sport == "":
             setSQL = f'null, "{user_place}"'
-        elif user_place == "" :
+        elif user_place == "":
             setSQL = f'"{user_sport}",null'
-        else :
+        else:
             setSQL = f'"{user_sport}", "{user_place}"'
 
-
-        
         # id 체크
         base = db.cursor()
         sql = f'select user_name from User\

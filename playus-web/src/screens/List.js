@@ -1,4 +1,3 @@
-import { Button, Modal } from "react-bootstrap";
 import BottomTabs from "../components/main/BottomTabs";
 import Header from "../components/main/Header";
 
