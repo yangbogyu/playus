@@ -18,10 +18,10 @@ function Home() {
   const [seeRoom, setSeeRoom] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/seeRooms/${me}`)
+    fetch(`http://54.180.112.51:5000/markRooms/${me}`)
       .then((res) => res.json())
-      .then(({ Rooms }) => {
-        setSeeRoom(Rooms);
+      .then(({ MarkRooms }) => {
+        setSeeRoom(MarkRooms);
       });
   }, []);
 

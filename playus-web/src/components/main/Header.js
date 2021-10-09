@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import LogoImg from "../../img/PLAYUS.png";
 import { faPlus, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { logUserout } from "../../apollo";
@@ -48,7 +49,12 @@ export default function Header() {
           <Column>
             <IconsContainer>
               <Icon>
-                <FontAwesomeIcon icon={faPlus} />
+                <Link
+                  to="/plusroom"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <FontAwesomeIcon icon={faPlus} />
+                </Link>
               </Icon>
               <Icon>
                 <FontAwesomeIcon

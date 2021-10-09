@@ -36,7 +36,7 @@ function Login() {
   });
 
   const fetchLogin = async ({ user_name, user_pw }) => {
-    const ok = await fetch("http://localhost:5000/logins", {
+    const ok = await fetch("http://54.180.112.51:5000/logins", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

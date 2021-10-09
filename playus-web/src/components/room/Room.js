@@ -56,7 +56,7 @@ function Room({
 
   const me = localStorage.getItem("LOGIN");
   const handleRoom = () => {
-    fetch("http://localhost:5000/inRooms", {
+    fetch("http://54.180.112.51:5000/inRooms", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

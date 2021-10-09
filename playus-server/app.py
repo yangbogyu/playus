@@ -12,7 +12,6 @@ from Room.createRoom import createRoom
 from Room.inRoom import inRoom
 from Room.outRoom import outRoom
 from Room.deleteRoom import deleteRoom
-from Room.markRoom import markRoom
 
 app = Flask(__name__)  # Flask 앱 생성
 CORS(app)
@@ -35,7 +34,6 @@ api.add_namespace(createRoom, '/createRooms')
 api.add_namespace(inRoom, '/inRooms')
 api.add_namespace(outRoom, '/outRooms')
 api.add_namespace(deleteRoom, '/deleteRooms')
-api.add_namespace(markRoom, '/markRooms')
 
 
 if __name__ == '__main__':

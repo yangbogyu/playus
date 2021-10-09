@@ -22,7 +22,7 @@ export default function Mark({ ami }) {
   const [place, setPlace] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/seeMarks/${ami}`)
+    fetch(`http://54.180.112.51:5000/seeMarks/${ami}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
         {
