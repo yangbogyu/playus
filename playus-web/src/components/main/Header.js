@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LogoImg from "../../img/PLAYUS.png";
 import { faPlus, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { logUserout } from "../../apollo";
+import routes from "../../routes";
 
 const SHeader = styled.header`
   width: 100%;
@@ -50,7 +51,7 @@ export default function Header() {
             <IconsContainer>
               <Icon>
                 <Link
-                  to="/plusroom"
+                  to={routes.register}
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   <FontAwesomeIcon icon={faPlus} />

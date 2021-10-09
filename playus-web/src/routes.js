@@ -3,6 +3,6 @@ const routes = {
   signUp: "/sign-up",
   list: "/list",
   user: "/user",
-  plusroom: "/plusroom",
+  register: "/register",
 };
 export default routes;
