@@ -2,7 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import LogoImg from "../../img/PLAYUS.png";
-import { faPlus, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faList,
+  faPlus,
+  faSignOutAlt,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { logUserout } from "../../apollo";
 import routes from "../../routes";
 
@@ -45,7 +50,12 @@ export default function Header() {
       <SHeader>
         <Wrapper>
           <Column>
-            <Logo src={LogoImg} />
+            <Link
+              to={routes.home}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Logo src={LogoImg} />
+            </Link>
           </Column>
           <Column>
             <IconsContainer>
@@ -55,6 +65,22 @@ export default function Header() {
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   <FontAwesomeIcon icon={faPlus} />
+                </Link>
+              </Icon>
+              <Icon>
+                <Link
+                  to={routes.list}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <FontAwesomeIcon icon={faList} />
+                </Link>
+              </Icon>
+              <Icon>
+                <Link
+                  to={routes.user}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <FontAwesomeIcon icon={faUser} />
                 </Link>
               </Icon>
               <Icon>

@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 const MarkContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  max-width: 930px;
-  margin-bottom: 10px;
+  flex-direction: column;
+`;
+
+const MarkWrapper = styled.div`
+  margin-bottom: 20px;
 `;
 
 const MarkPlace = styled.span`
@@ -33,9 +35,10 @@ export default function Mark({ ami }) {
 
   return (
     <MarkContainer>
-      <FontAwesomeIcon icon={faLocationArrow} />
-
-      <MarkPlace>{place}</MarkPlace>
+      <MarkWrapper>
+        <FontAwesomeIcon icon={faLocationArrow} />
+        <MarkPlace>{place}</MarkPlace>
+      </MarkWrapper>
     </MarkContainer>
   );
 }

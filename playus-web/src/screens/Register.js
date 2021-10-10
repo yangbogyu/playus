@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import BottomTabs from "../components/main/BottomTabs";
 import Header from "../components/main/Header";
 import FormBox from "../components/auth/FormBox";
 import Input from "../components/auth/Input";
@@ -11,10 +10,9 @@ import MapContainer from "../components/register/MapContainer";
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 20px;
   padding-bottom: 60px;
 `;
 
@@ -36,6 +34,7 @@ const Button = styled.button`
   padding: 8px 0px;
   font-weight: 600;
   width: 100%;
+  opacity: ${(props) => (props.disabled ? "0.2" : "1")};
 `;
 
 // 방 제목 = input
@@ -44,23 +43,38 @@ const Button = styled.button`
 // 장소
 // 최종 인원 수
 
-function PlusRoom() {
-  const { register, errors, formState } = useForm({
+function Register() {
+  const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
 
   const [InputText, setInputText] = useState("");
-  const [Place, setPlace] = useState("송파 아우름 센터");
+  const [Place, setPlace] = useState("서울 시청");
 
   const onChange = (e) => {
     setInputText(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    console.log(e);
+  const searchSubmit = (e) => {
     e.preventDefault();
     setPlace(InputText);
     setInputText("");
+  };
+
+  const fetchSubmitValid = async ({
+    room_title,
+    room_sport,
+    room_place,
+    room_time,
+    room_total,
+  }) => {
+    console.log({
+      room_title,
+      room_sport,
+      room_place,
+      room_time,
+      room_total,
+    });
   };
 
   return (
@@ -69,19 +83,7 @@ function PlusRoom() {
       <Container>
         <Wrapper>
           <FormBox>
-            {/* <form onSubmit={handleSubmit(onSubmitValid)}> */}
-            <Input
-              ref={register({
-                required: "Title is required",
-              })}
-              name="room_title"
-              type="text"
-              placeholder="Title"
-              hasError={Boolean(errors?.room_title?.message)}
-            />
-            <FormError message={errors?.room_title?.message} />
-            <RadioSport />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={searchSubmit}>
               <Input
                 placeholder="검색어를 입력하세요"
                 onChange={onChange}
@@ -89,33 +91,72 @@ function PlusRoom() {
               />
               <Button type="submit">검색</Button>
             </form>
+
             <MapContainer searchPlace={Place} />
-            <Input
-              ref={register({
-                required: "Time is required",
-              })}
-              name="room_time"
-              type="text"
-              placeholder="Time"
-              hasError={Boolean(errors?.room_time?.message)}
-            />
-            <FormError message={errors?.room_time?.message} />
-            <Input
-              ref={register({
-                required: "Total Members is required",
-              })}
-              name="room_total"
-              type="text"
-              placeholder="Total Members"
-              hasError={Boolean(errors?.room_total?.message)}
-            />
-            <FormError message={errors?.room_total?.message} />
-            {/* </form> */}
+
+            <form onSubmit={handleSubmit(fetchSubmitValid)}>
+              <Input
+                ref={register({
+                  required: "Title is required",
+                })}
+                name="room_title"
+                type="text"
+                placeholder="Title"
+                hasError={Boolean(errors?.room_title?.message)}
+              />
+
+              <FormError message={errors?.room_title?.message} />
+              <Input
+                ref={register({
+                  required: "Sport is required",
+                })}
+                name="room_sport"
+                type="text"
+                placeholder="Sport"
+                hasError={Boolean(errors?.room_sport?.message)}
+              />
+              <FormError message={errors?.room_sport?.message} />
+
+              <Input
+                ref={register({
+                  required: "Place is required",
+                })}
+                name="room_place"
+                type="text"
+                placeholder="Place"
+                hasError={Boolean(errors?.room_place?.message)}
+              />
+              <FormError message={errors?.room_place?.message} />
+
+              <Input
+                ref={register({
+                  required: "Time is required",
+                })}
+                name="room_time"
+                type="text"
+                placeholder="Time"
+                hasError={Boolean(errors?.room_time?.message)}
+              />
+              <FormError message={errors?.room_time?.message} />
+
+              <Input
+                ref={register({
+                  required: "Total Members is required",
+                })}
+                name="room_total"
+                type="text"
+                placeholder="Total Members"
+                hasError={Boolean(errors?.room_total?.message)}
+              />
+              <FormError message={errors?.room_total?.message} />
+              <Button type="submit" disabled={!formState.isValid}>
+                방만들기
+              </Button>
+            </form>
           </FormBox>
         </Wrapper>
       </Container>
-      <BottomTabs />
     </div>
   );
 }
-export default PlusRoom;
+export default Register;

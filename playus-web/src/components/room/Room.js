@@ -2,21 +2,14 @@ import styled from "styled-components";
 import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import RoomInfo from "./RoomInfo";
-import Alert from "@mui/material/Alert";
 
 const RoomContainer = styled.div`
-  max-width: 615px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px;
   border-radius: 4px;
   border: 1px solid ${(props) => props.theme.borderColor};
-
-  @media screen and (max-width: 615px) {
-    max-width: 450px;
-  }
 `;
 
 const RoomContent = styled.div`

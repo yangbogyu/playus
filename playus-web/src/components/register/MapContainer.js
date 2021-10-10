@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 const { kakao } = window;
 
+let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+let address = null;
+
 const Map = styled.div`
   width: 450px;
   height: 450px;
@@ -15,10 +19,9 @@ const Map = styled.div`
 
 const MapContainer = ({ searchPlace }) => {
   useEffect(() => {
-    var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
     const container = document.getElementById("Map");
     const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(37.5666805, 126.9784147),
       level: 3,
     };
     const map = new kakao.maps.Map(container, options);
@@ -45,10 +48,11 @@ const MapContainer = ({ searchPlace }) => {
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
       });
-
-      // 마커에 클릭이벤트를 등록합니다
+      // 마커에 클릭이벤트를 등록
       kakao.maps.event.addListener(marker, "click", function () {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        address = place.address_name;
+        console.log(address);
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
             place.place_name +
@@ -59,7 +63,11 @@ const MapContainer = ({ searchPlace }) => {
     }
   }, [searchPlace]);
 
-  return <Map id="Map"></Map>;
+  return (
+    <div>
+      <Map id="Map"></Map>
+    </div>
+  );
 };
 
 export default MapContainer;

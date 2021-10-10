@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import BottomTabs from "../components/main/BottomTabs";
 import Header from "../components/main/Header";
 import Mark from "../components/main/Mark";
 import Room from "../components/room/Room";
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  margin-top: 20px;
   padding-bottom: 60px;
+`;
+
+const Wrapper = styled.div`
+  max-width: 615px;
+  width: 100%;
+  @media screen and (max-width: 615px) {
+    max-width: 450px;
+  }
 `;
 
 function Home() {
@@ -29,12 +36,13 @@ function Home() {
     <div>
       <Header />
       <Container>
-        <Mark ami={me} />
-        {seeRoom?.map((room) => (
-          <Room key={room.room_no} {...room} />
-        ))}
+        <Wrapper>
+          <Mark ami={me} />
+          {seeRoom?.map((room) => (
+            <Room key={room.room_no} {...room} />
+          ))}
+        </Wrapper>
       </Container>
-      <BottomTabs />
     </div>
   );
 }
