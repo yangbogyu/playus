@@ -58,7 +58,7 @@ function SingUp() {
     user_phone,
     user_mail,
     user_sport,
-    user_place,
+    user_address,
   }) => {
     const ok = await fetch("http://54.180.112.51:5000/createAccounts", {
       method: "post",
@@ -69,7 +69,7 @@ function SingUp() {
         user_phone,
         user_mail,
         user_sport,
-        user_place,
+        user_address,
       }),
     }).then((res) => res.json());
     return ok;
@@ -82,7 +82,7 @@ function SingUp() {
     user_phone,
     user_mail,
     user_sport,
-    user_place,
+    user_address,
   }) => {
     // 중복체크 가능 여부 확인
     const { id } = await checkUsername({ user_name });
@@ -90,11 +90,11 @@ function SingUp() {
     const { phone } = await checkPhone({ user_phone });
 
     // undefined한 값들 null로 변환
-    if (user_sport || user_place === undefined) {
+    if (user_sport || user_address === undefined) {
       if (user_sport === undefined) {
         user_sport = "";
-      } else if (user_place === undefined) {
-        user_place = "";
+      } else if (user_address === undefined) {
+        user_address = "";
       }
     }
 
@@ -107,7 +107,7 @@ function SingUp() {
         user_phone,
         user_mail,
         user_sport,
-        user_place,
+        user_address,
       });
       alert("Success!");
     } else {

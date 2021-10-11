@@ -38,6 +38,7 @@ const RoomButton = styled.span`
 function Room({
   room_no,
   room_place,
+  room_address,
   room_sport,
   room_time,
   room_title,
@@ -75,6 +76,7 @@ function Room({
       <RoomContent>
         <RoomText>{room_title}</RoomText>
         <RoomText>{room_place}</RoomText>
+        <RoomText>{room_address}</RoomText>
         <RoomText>{room_time}</RoomText>
       </RoomContent>
       <RoomButton>
@@ -106,6 +108,7 @@ function Room({
           </Modal.Header>
           <Modal.Body>
             <RoomInfo title="장소" content={room_place} />
+            <RoomInfo title="주소" content={room_address} />
             <RoomInfo title="시간" content={room_time} />
             <RoomInfo title="종목" content={room_sport} />
             <RoomInfo title="총원" content={room_total + " 명"} />

@@ -29,6 +29,7 @@ function Home() {
       .then((res) => res.json())
       .then(({ MarkRooms }) => {
         setSeeRoom(MarkRooms);
+        console.log(MarkRooms);
       });
   }, []);
 

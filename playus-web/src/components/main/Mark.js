@@ -28,7 +28,7 @@ export default function Mark({ ami }) {
       .then((res) => res.json())
       .then(({ Mark }) => {
         {
-          Mark.user_place ? setPlace(Mark.user_place) : setPlace("미설정");
+          Mark.user_address ? setPlace(Mark.user_address) : setPlace("미설정");
         }
       });
   }, []);
