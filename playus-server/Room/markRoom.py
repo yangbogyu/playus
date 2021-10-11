@@ -29,37 +29,37 @@ class Mark(Resource):
                     charset=os.getenv('MYSQL_CHARSET'),
                     cursorclass=pymysql.cursors.DictCursor)
         base = db.cursor()
-        sql = f'select user_sport, user_place from User\
+        sql = f'select user_sport, user_address from User\
                 where user_name = "{user_name}";'
         base.execute(sql)
         mark = base.fetchall()
         base.close()
 
-        user_sport, user_place = None, None
+        user_sport, user_address = None, None
 
         # 값 받아서 저장
         if mark:
             for i in mark:
                 user_sport = i['user_sport'] # 종목
-                user_place = i['user_place'] # 장소
+                user_address = i['user_address'] # 장소
         
         # where문
         where_sql = False
-        if user_sport != None and user_place != None:
-            where_sql = f'where r.room_sport = "{user_sport}" and r.room_place = "{user_place}"'
-        elif user_sport != None and user_place == None:
+        if user_sport != None and user_address != None:
+            where_sql = f'where r.room_sport = "{user_sport}" and r.room_address like "%{user_address}%"'
+        elif user_sport != None and user_address == None:
             where_sql = f'where r.room_sport = "{user_sport}"'
-        elif user_sport == None and user_place != None:
-            where_sql = f'where r.room_place = "{user_place}"'
+        elif user_sport == None and user_address != None:
+            where_sql = f'where r.room_address like "%{user_address}%"'
 
         if where_sql == False:    
-            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place,r.room_address, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
                 group by r.room_no having count(*);'
         else:
-            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+            sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place,r.room_address, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no {where_sql}\

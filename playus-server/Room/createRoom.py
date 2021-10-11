@@ -31,6 +31,7 @@ class Create(Resource):
         room_place = data['room_place']
         room_total = data['room_total']
         room_sport = data['room_sport']
+        room_address = data['room_address']
 
 
         base = db.cursor()
@@ -44,8 +45,8 @@ class Create(Resource):
         else:
             #방 만들기
             base = db.cursor()
-            sql = f'insert into Room(room_title, room_time , room_place, room_total, room_sport)\
-                values ("{room_title}", "{room_time}", "{room_place}", "{room_total}", "{room_sport}");'
+            sql = f'insert into Room(room_title, room_time , room_place, room_total, room_sport, room_address)\
+                values ("{room_title}", "{room_time}", "{room_place}", "{room_total}", "{room_sport}", "{room_address}");'
             base.execute(sql)
             db.commit()
             base.close()

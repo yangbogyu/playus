@@ -36,17 +36,17 @@ class CreateAccount(Resource):
         user_phone = data['user_phone']
         user_mail = data['user_mail']
         user_sport = data['user_sport']
-        user_place = data['user_place']
+        user_address = data['user_address']
 
         # 스포츠, 지역 null확인
-        if user_sport == "" and user_place == "":
+        if user_sport == "" and user_address == "":
             setSQL = 'null, null'
         elif user_sport == "":
-            setSQL = f'null, "{user_place}"'
-        elif user_place == "":
+            setSQL = f'null, "{user_address}"'
+        elif user_address == "":
             setSQL = f'"{user_sport}",null'
         else:
-            setSQL = f'"{user_sport}", "{user_place}"'
+            setSQL = f'"{user_sport}", "{user_address}"'
 
         # id 체크
         base = db.cursor()
@@ -84,7 +84,7 @@ class CreateAccount(Resource):
 
         # db값 저장
         base = db.cursor()
-        sql = f'insert into User(user_name, user_pw, user_phone, user_mail, user_sport, user_place)\
+        sql = f'insert into User(user_name, user_pw, user_phone, user_mail, user_sport, user_address)\
                 values ("{user_name}", "{user_bcrypt}", "{user_phone}", "{user_mail}", {setSQL});'
         base.execute(sql)
         db.commit()

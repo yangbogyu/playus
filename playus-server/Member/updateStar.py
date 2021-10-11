@@ -28,19 +28,19 @@ class update(Resource):
         data = request.get_json()
         user_name = data['user_name']
         user_sport = data['user_sport'] 
-        user_place = data['user_place']
+        user_address = data['user_address']
 
-        print(f'user_name = {user_name}, user_sport = {user_sport}, user_place = {user_place}')
+        print(f'user_name = {user_name}, user_sport = {user_sport}, user_address = {user_address}')
 
         # 들어온 값 확인
-        if user_sport == None and user_place == None :
-            setSQL = 'set user_sport = null, user_place = null'
+        if user_sport == None and user_address == None :
+            setSQL = 'set user_sport = null, user_address = null'
         elif user_sport == None:
-            setSQL = f'set user_sport = null, user_place = "{user_place}"'
-        elif user_place == None :
-            setSQL = f'set user_sport = "{user_sport}", user_place = null'
+            setSQL = f'set user_sport = null, user_address = "{user_address}"'
+        elif user_address == None :
+            setSQL = f'set user_sport = "{user_sport}", user_address = null'
         else :
-            setSQL = f'set user_sport = "{user_sport}", user_place = "{user_place}"'
+            setSQL = f'set user_sport = "{user_sport}", user_address = "{user_address}"'
 
         # update 실행
         base = db.cursor()
