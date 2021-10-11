@@ -31,7 +31,7 @@ class Master(Resource):
                     db=os.getenv('MYSQL_DATABASE'),
                     charset=os.getenv('MYSQL_CHARSET'),
                     cursorclass=pymysql.cursors.DictCursor)
-        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name\
+        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place,r.room_address, r.room_time, r.room_total, u.user_name\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
@@ -52,7 +52,7 @@ class Master(Resource):
         else:
             return {'MasterRooms' : False}
         
-        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place,r.room_address, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no {whereSQL}\
@@ -98,7 +98,7 @@ class People(Resource):
         else:
             return {'PeopleRooms' : False}
         
-        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
+        sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place,r.room_address, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no {whereSQL}\

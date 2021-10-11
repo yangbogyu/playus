@@ -30,12 +30,12 @@ api.add_namespace(Create, '/createAccounts')
 api.add_namespace(updateStar, '/updateStars')
 api.add_namespace(seeMark, '/seeMarks')
 
+api.add_namespace(markRoom, '/markRooms')
 api.add_namespace(seeRoom, '/seeRooms')
 api.add_namespace(createRoom, '/createRooms')
 api.add_namespace(inRoom, '/inRooms')
 api.add_namespace(outRoom, '/outRooms')
 api.add_namespace(deleteRoom, '/deleteRooms')
-api.add_namespace(markRoom, '/markRooms')
 
 
 if __name__ == '__main__':
