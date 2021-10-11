@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 const MarkContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  max-width: 930px;
-  margin-bottom: 10px;
+  flex-direction: column;
+`;
+
+const MarkWrapper = styled.div`
+  margin-bottom: 20px;
 `;
 
 const MarkPlace = styled.span`
@@ -26,16 +28,17 @@ export default function Mark({ ami }) {
       .then((res) => res.json())
       .then(({ Mark }) => {
         {
-          Mark.user_place ? setPlace(Mark.user_place) : setPlace("미설정");
+          Mark.user_address ? setPlace(Mark.user_address) : setPlace("미설정");
         }
       });
   }, []);
 
   return (
     <MarkContainer>
-      <FontAwesomeIcon icon={faLocationArrow} />
-
-      <MarkPlace>{place}</MarkPlace>
+      <MarkWrapper>
+        <FontAwesomeIcon icon={faLocationArrow} />
+        <MarkPlace>{place}</MarkPlace>
+      </MarkWrapper>
     </MarkContainer>
   );
 }
