@@ -12,7 +12,6 @@ from Room.createRoom import createRoom
 from Room.inRoom import inRoom
 from Room.outRoom import outRoom
 from Room.deleteRoom import deleteRoom
-from Room.markRoom import markRoom
 
 app = Flask(__name__)  # Flask 앱 생성
 CORS(app)

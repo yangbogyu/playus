@@ -30,7 +30,7 @@ function SingUp() {
   // 유저이름 중복체크 fetch
   const checkUsername = async ({ user_name }) => {
     const ok = await fetch(
-      `http://localhost:5000/createAccounts/IDCheck/${user_name}`
+      `http://54.180.112.51:5000/createAccounts/IDCheck/${user_name}`
     ).then((res) => res.json());
     return ok;
   };
@@ -38,7 +38,7 @@ function SingUp() {
   // 이메일 중복체크 fetch
   const checkEmail = async ({ user_mail }) => {
     const ok = await fetch(
-      `http://localhost:5000/createAccounts/mailCheck/${user_mail}`
+      `http://54.180.112.51:5000/createAccounts/mailCheck/${user_mail}`
     ).then((res) => res.json());
     return ok;
   };
@@ -46,7 +46,7 @@ function SingUp() {
   // 핸드폰번호 중복체크 fetch
   const checkPhone = async ({ user_phone }) => {
     const ok = await fetch(
-      `http://localhost:5000/createAccounts/phoneCheck/${user_phone}`
+      `http://54.180.112.51:5000/createAccounts/phoneCheck/${user_phone}`
     ).then((res) => res.json());
     return ok;
   };
@@ -60,7 +60,7 @@ function SingUp() {
     user_sport,
     user_place,
   }) => {
-    const ok = await fetch("http://localhost:5000/createAccounts", {
+    const ok = await fetch("http://54.180.112.51:5000/createAccounts", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
