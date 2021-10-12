@@ -4,6 +4,9 @@ import styled from "styled-components";
 import FormError from "../auth/FormError";
 import Input from "../auth/Input";
 
+require("dotenv").config();
+const URL = process.env.REACT_APP_API;
+
 const { kakao } = window;
 
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
@@ -108,7 +111,7 @@ export default function MapContainer() {
     room_time,
     room_total,
   }) => {
-    const ok = await fetch("http://54.180.112.51:5000/createRooms", {
+    const ok = await fetch(`http://${URL}/createRooms`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

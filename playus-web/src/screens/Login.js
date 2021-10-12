@@ -11,6 +11,8 @@ import Separator from "../components/auth/Separator";
 import PageTitle from "../components/PageTitle";
 import routes from "../routes";
 import Logopng from "../img/PLAYUS.png";
+require("dotenv").config();
+const URL = process.env.REACT_APP_API;
 
 const Logo = styled.img`
   width: 50%;
@@ -36,7 +38,7 @@ function Login() {
   });
 
   const fetchLogin = async ({ user_name, user_pw }) => {
-    const ok = await fetch("http://54.180.112.51:5000/logins", {
+    const ok = await fetch(`http://${URL}/logins`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

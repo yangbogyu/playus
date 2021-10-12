@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+require("dotenv").config();
+const URL = process.env.REACT_APP_API;
 
 const MarkContainer = styled.div`
   display: flex;
@@ -24,7 +26,7 @@ export default function Mark({ ami }) {
   const [place, setPlace] = useState();
 
   useEffect(() => {
-    fetch(`http://54.180.112.51:5000/seeMarks/${ami}`)
+    fetch(`http://${URL}/seeMarks/${ami}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
         {

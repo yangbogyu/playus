@@ -3,6 +3,9 @@ import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import RoomInfo from "./RoomInfo";
 
+require("dotenv").config();
+const URL = process.env.REACT_APP_API;
+
 const RoomContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -50,7 +53,7 @@ function Room({
 
   const me = localStorage.getItem("LOGIN");
   const handleRoom = () => {
-    fetch("http://54.180.112.51:5000/inRooms", {
+    fetch(`http://${URL}/inRooms`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

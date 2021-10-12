@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Header from "../components/main/Header";
 import Mark from "../components/main/Mark";
 import Room from "../components/room/Room";
+require("dotenv").config();
+const URL = process.env.REACT_APP_API;
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +27,7 @@ function Home() {
   const [seeRoom, setSeeRoom] = useState();
 
   useEffect(() => {
-    fetch(`http://54.180.112.51:5000/markRooms/${me}`)
+    fetch(`http://${URL}/markRooms/${me}`)
       .then((res) => res.json())
       .then(({ MarkRooms }) => {
         setSeeRoom(MarkRooms);
