@@ -22,16 +22,15 @@ const MarkPlace = styled.span`
   margin-left: 4px;
 `;
 
-export default function Mark({ ami }) {
+export default function Mark() {
   const [place, setPlace] = useState();
 
   useEffect(() => {
-    fetch(`http://${URL}/seeMarks/${ami}`)
+    const me = localStorage.getItem("LOGIN");
+    fetch(`http://${URL}/seeMarks/${me}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
-        {
-          Mark.user_address ? setPlace(Mark.user_address) : setPlace("미설정");
-        }
+        Mark.user_address ? setPlace(Mark.user_address) : setPlace("미설정");
       });
   }, []);
 

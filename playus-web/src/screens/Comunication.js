@@ -1,7 +1,5 @@
-import React from "react";
-import styled from "styled-components";
 import Header from "../components/main/Header";
-import MapContainer from "../components/register/MapContainer";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -19,22 +17,13 @@ const Wrapper = styled.div`
   }
 `;
 
-// 방 제목 = input
-// 종목 = checkBox or button
-// 시간
-// 장소
-// 최종 인원 수
-
-function Register() {
+export default function Comunication() {
   return (
     <div>
       <Header />
       <Container>
-        <Wrapper>
-          <MapContainer />
-        </Wrapper>
+        <Wrapper>업데이트 예정</Wrapper>
       </Container>
     </div>
   );
 }
-export default Register;

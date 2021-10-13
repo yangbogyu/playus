@@ -12,6 +12,7 @@ import { HelmetProvider } from "react-helmet-async";
 import User from "./screens/User";
 import List from "./screens/List";
 import Register from "./screens/Register";
+import Comunication from "./screens/Comunication";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -36,8 +37,11 @@ function App() {
             <Route path={routes.user}>
               {isLoggedIn ? <User /> : <Login />}
             </Route>
-            <Route path={routes.plusroom}>
+            <Route path={routes.register}>
               {isLoggedIn ? <Register /> : <Login />}
+            </Route>
+            <Route path={routes.room}>
+              {isLoggedIn ? <Comunication /> : <Login />}
             </Route>
             <Route>
               <NotFound />

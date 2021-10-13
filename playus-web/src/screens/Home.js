@@ -23,6 +23,11 @@ const Wrapper = styled.div`
 `;
 
 function Home() {
+  // const [index, setIndex] = useState(0);
+
+  // const handleSelect = (selectedIndex, e) => {
+  //   setIndex(selectedIndex);
+  // };
   const me = localStorage.getItem("LOGIN");
   const [seeRoom, setSeeRoom] = useState();
 
@@ -33,14 +38,14 @@ function Home() {
         setSeeRoom(MarkRooms);
         console.log(MarkRooms);
       });
-  }, []);
+  }, [me]);
 
   return (
     <div>
       <Header />
       <Container>
         <Wrapper>
-          <Mark ami={me} />
+          <Mark />
           {seeRoom?.map((room) => (
             <Room key={room.room_no} {...room} />
           ))}

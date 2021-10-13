@@ -54,7 +54,7 @@ function SingUp() {
   };
 
   // 회원가입 fetch
-  const signUp = async ({
+  const createAccounts = async ({
     user_name,
     user_pw,
     user_phone,
@@ -103,7 +103,7 @@ function SingUp() {
     // 세가지 중복체크가 true 이면 회원가입 가능
     if (id && mail && phone === true) {
       // signUp
-      signUp({
+      createAccounts({
         user_name,
         user_pw,
         user_phone,
@@ -111,9 +111,9 @@ function SingUp() {
         user_sport,
         user_address,
       });
-      alert("Success!");
+      alert("성공!");
     } else {
-      alert("Try again!");
+      alert("이미 가입된 아이디 입니다.");
     }
   };
 
@@ -177,7 +177,7 @@ function SingUp() {
             ref={register({
               required: false,
             })}
-            name="user_place"
+            name="user_address"
             type="text"
             placeholder="Favorite Place"
           />

@@ -66,7 +66,7 @@ function Room({
         if (inRoom === false) {
           alert("이미 참가한 방입니다.");
         } else {
-          alert("참가 성공");
+          alert("성공!");
         }
         return inRoom;
       });

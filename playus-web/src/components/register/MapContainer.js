@@ -54,7 +54,7 @@ const Button = styled.button`
 `;
 
 export default function MapContainer() {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     mode: "onChange",
   });
 
@@ -100,7 +100,11 @@ export default function MapContainer() {
       room_time,
       room_total,
     });
-    console.log({ createRoom });
+    if (createRoom === true) {
+      alert("성공");
+    } else {
+      alert("이미 존재한 방입니다.");
+    }
   };
 
   const CREATEROOM = async ({

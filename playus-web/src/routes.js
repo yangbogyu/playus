@@ -4,5 +4,6 @@ const routes = {
   list: "/list",
   user: "/user",
   register: "/register",
+  room: "/room",
 };
 export default routes;
