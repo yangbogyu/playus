@@ -12,12 +12,12 @@ const { kakao } = window;
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
 const Map = styled.div`
-  width: 450px;
-  height: 450px;
+  width: 530px;
+  height: 400px;
   margin: 20px;
   @media screen and (max-width: 615px) {
     width: 350px;
-    height: 350px;
+    height: 300px;
   }
 `;
 
@@ -43,7 +43,7 @@ const FormBox = styled.div`
 const Button = styled.button`
   border: none;
   border-radius: 3px;
-  margin-top: 12px;
+  margin-top: 20px;
   background-color: ${(props) => props.theme.accent};
   color: white;
   text-align: center;
@@ -51,6 +51,29 @@ const Button = styled.button`
   font-weight: 600;
   width: 100%;
   opacity: ${(props) => (props.disabled ? "0.2" : "1")};
+`;
+
+const InputWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const InputTitle = styled.div`
+  border: 0.5px solid
+  border-radius: 3px;
+
+  margin-top: 5px;
+  margin-right: 10px;
+
+  background-color: rgb(216, 216, 216);
+  color: rgb(100, 100, 100);
+
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+
+  width: 80px;
 `;
 
 export default function MapContainer() {
@@ -92,6 +115,14 @@ export default function MapContainer() {
     room_time,
     room_total,
   }) => {
+    console.log({
+      room_title,
+      room_sport,
+      room_place,
+      room_address,
+      room_time,
+      room_total,
+    });
     const { createRoom } = await CREATEROOM({
       room_title,
       room_sport,
@@ -190,75 +221,94 @@ export default function MapContainer() {
         </form>
         <Map id="Map"></Map>
         <form onSubmit={handleSubmit(fetchSubmitValid)}>
-          <Input
-            ref={register({
-              required: "Title is required",
-            })}
-            name="room_title"
-            type="text"
-            placeholder="Title"
-            hasError={Boolean(errors?.room_title?.message)}
-          />
-
+          <InputWrapper>
+            <InputTitle>Title</InputTitle>
+            <Input
+              ref={register({
+                required: "Title is required",
+              })}
+              name="room_title"
+              type="text"
+              placeholder="ex) 농구할사람"
+              hasError={Boolean(errors?.room_title?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.room_title?.message} />
-          <Input
-            ref={register({
-              required: "Sport is required",
-            })}
-            name="room_sport"
-            type="text"
-            placeholder="Sport"
-            hasError={Boolean(errors?.room_sport?.message)}
-          />
+
+          <InputWrapper>
+            <InputTitle>Sport</InputTitle>
+            <Input
+              ref={register({
+                required: "Sport is required",
+              })}
+              name="room_sport"
+              type="text"
+              placeholder="ex) 농구 or 축구"
+              hasError={Boolean(errors?.room_sport?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.room_sport?.message} />
 
-          <Input
-            ref={register({
-              required: "Place is required",
-            })}
-            name="room_place"
-            type="text"
-            placeholder="Place"
-            onChange={onSearchChange}
-            value={searchPlace}
-            hasError={Boolean(errors?.room_place?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>Place</InputTitle>
+            <Input
+              ref={register({
+                required: "Place is required",
+              })}
+              name="room_place"
+              type="text"
+              placeholder="ex) 서울 시청"
+              onChange={onSearchChange}
+              value={searchPlace}
+              hasError={Boolean(errors?.room_place?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.room_place?.message} />
 
-          <Input
-            ref={register({
-              required: "Address is required",
-            })}
-            name="room_address"
-            type="text"
-            placeholder="Address"
-            onChange={onAddressChange}
-            value={address}
-            hasError={Boolean(errors?.room_address?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>Addr</InputTitle>
+            <Input
+              ref={register({
+                required: "Address is required",
+              })}
+              name="room_address"
+              type="text"
+              placeholder="ex) 서울 중구 정동 5-5"
+              onChange={onAddressChange}
+              value={address}
+              hasError={Boolean(errors?.room_address?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.room_address?.message} />
 
-          <Input
-            ref={register({
-              required: "Time is required",
-            })}
-            name="room_time"
-            type="text"
-            placeholder="Time"
-            hasError={Boolean(errors?.room_time?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>Time</InputTitle>
+            <Input
+              ref={register({
+                required: "Time is required",
+              })}
+              name="room_time"
+              type="text"
+              placeholder="ex) 2021-10-01 10:00:00"
+              hasError={Boolean(errors?.room_time?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.room_time?.message} />
 
-          <Input
-            ref={register({
-              required: "Total Members is required",
-            })}
-            name="room_total"
-            type="text"
-            placeholder="Total Members"
-            hasError={Boolean(errors?.room_total?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>Total</InputTitle>
+            <Input
+              ref={register({
+                required: "Total Members is required",
+              })}
+              name="room_total"
+              type="number"
+              placeholder="ex) 6"
+              hasError={Boolean(errors?.room_total?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.room_total?.message} />
+
           <Button type="submit">방만들기</Button>
         </form>
       </FormBox>

@@ -18,7 +18,7 @@ const RoomContainer = styled.div`
 const RoomContent = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
   margin: 10px;
 `;
@@ -34,8 +34,7 @@ const RoomButton = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 function Room({

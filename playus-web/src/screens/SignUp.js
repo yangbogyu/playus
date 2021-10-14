@@ -23,6 +23,29 @@ const Logo = styled.img`
   margin-top: 5px;
 `;
 
+const InputWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const InputTitle = styled.div`
+  border: 0.5px solid
+  border-radius: 3px;
+
+  margin-top: 5px;
+  margin-right: 10px;
+
+  background-color: rgb(216, 216, 216);
+  color: rgb(100, 100, 100);
+
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+
+  width: 70px;
+`;
+
 function SingUp() {
   // react hooks
   const { register, handleSubmit, errors, formState } = useForm({
@@ -125,62 +148,80 @@ function SingUp() {
           <Logo src={Logopng} />
         </HeaderContainer>
         <form onSubmit={handleSubmit(onSubmitValid)}>
-          <Input
-            ref={register({
-              required: "Username is required.",
-            })}
-            name="user_name"
-            type="text"
-            placeholder="Username"
-            hasError={Boolean(errors?.user_name?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>User</InputTitle>
+            <Input
+              ref={register({
+                required: "Username is required.",
+              })}
+              name="user_name"
+              type="text"
+              placeholder="사용할 아이디"
+              hasError={Boolean(errors?.user_name?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.user_name?.message} />
-          <Input
-            ref={register({
-              required: "Password is required.",
-            })}
-            name="user_pw"
-            type="password"
-            placeholder="Password"
-            hasError={Boolean(errors?.user_pw?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>PW</InputTitle>
+            <Input
+              ref={register({
+                required: "Password is required.",
+              })}
+              name="user_pw"
+              type="password"
+              placeholder="사용할 비밀번호"
+              hasError={Boolean(errors?.user_pw?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.user_pw?.message} />
-          <Input
-            ref={register({
-              required: "Phone is required.",
-            })}
-            name="user_phone"
-            type="text"
-            placeholder="Phone"
-            hasError={Boolean(errors?.user_phone?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>PH</InputTitle>
+            <Input
+              ref={register({
+                required: "Phone is required.",
+              })}
+              name="user_phone"
+              type="tel"
+              placeholder="핸드폰 번호"
+              hasError={Boolean(errors?.user_phone?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.user_phone?.message} />
-          <Input
-            ref={register({
-              required: "Email is required.",
-            })}
-            name="user_mail"
-            type="text"
-            placeholder="Email"
-            hasError={Boolean(errors?.user_mail?.message)}
-          />
+          <InputWrapper>
+            <InputTitle>Email</InputTitle>
+            <Input
+              ref={register({
+                required: "Email is required.",
+              })}
+              name="user_mail"
+              type="email"
+              placeholder="이메일"
+              hasError={Boolean(errors?.user_mail?.message)}
+            />
+          </InputWrapper>
           <FormError message={errors?.user_mail?.message} />
-          <Input
-            ref={register({
-              required: false,
-            })}
-            name="user_sport"
-            type="text"
-            placeholder="Favorite Sport"
-          />
-          <Input
-            ref={register({
-              required: false,
-            })}
-            name="user_address"
-            type="text"
-            placeholder="Favorite Place"
-          />
+          <InputWrapper>
+            <InputTitle>Sport</InputTitle>
+            <Input
+              ref={register({
+                required: false,
+              })}
+              name="user_sport"
+              type="text"
+              placeholder="ex) 농구 OR 축구"
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <InputTitle>Addr</InputTitle>
+            <Input
+              ref={register({
+                required: false,
+              })}
+              name="user_address"
+              type="text"
+              placeholder="ex) 경기 성남시 수정구"
+            />
+          </InputWrapper>
           <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
         </form>
       </FormBox>

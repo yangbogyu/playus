@@ -54,6 +54,7 @@ function List() {
     fetch(`http://${URL}/seeRooms/master/${me}`)
       .then((res) => res.json())
       .then(({ MasterRooms }) => {
+        console.log(MasterRooms);
         setSeeMasterList(MasterRooms);
       });
     fetch(`http://${URL}/seeRooms/people/${me}`)
@@ -70,15 +71,19 @@ function List() {
         <Wrapper>
           <Info>등록한 방</Info>
           <FormBox>
-            {seeMasterList?.map((room) => (
-              <MasterRoom key={room.room_no} {...room} />
-            ))}
+            {seeMasterList
+              ? seeMasterList?.map((room) => (
+                  <MasterRoom key={room.room_no} {...room} />
+                ))
+              : null}
           </FormBox>
           <Info>참가한 방</Info>
           <FormBox>
-            {seePeopleList?.map((room) => (
-              <PeopleRoom key={room.room_no} {...room} />
-            ))}
+            {seePeopleList
+              ? seePeopleList?.map((room) => (
+                  <PeopleRoom key={room.room_no} {...room} />
+                ))
+              : null}
           </FormBox>
         </Wrapper>
       </Container>
