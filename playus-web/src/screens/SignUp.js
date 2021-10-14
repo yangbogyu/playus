@@ -30,7 +30,6 @@ const InputWrapper = styled.div`
 `;
 
 const InputTitle = styled.div`
-  border: 0.5px solid
   border-radius: 3px;
 
   margin-top: 5px;
