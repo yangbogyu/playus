@@ -19,7 +19,7 @@ const RoomContent = styled.div`
 const RoomText = styled.span`
   margin: 10px;
   font-weight: 600;
-  color: rgb(142, 142, 142);
+  color: rgb(140, 140, 140);
   margin-left: 15px;
 `;
 
