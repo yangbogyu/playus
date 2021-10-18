@@ -104,7 +104,9 @@ function User() {
       user_sport,
       user_address,
     });
-    console.log(updateStar);
+    if (updateStar === true) {
+      alert("성공");
+    }
   };
 
   const UPDATESTAR = async ({ user_sport, user_address }) => {
