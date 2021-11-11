@@ -32,7 +32,7 @@ function Home() {
   const [seeRoom, setSeeRoom] = useState();
 
   useEffect(() => {
-    fetch(`http://${URL}/markRooms/${me}`)
+    fetch(`${URL}/markRooms/${me}`)
       .then((res) => res.json())
       .then(({ MarkRooms }) => {
         setSeeRoom(MarkRooms);

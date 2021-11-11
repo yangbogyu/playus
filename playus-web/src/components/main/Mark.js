@@ -27,7 +27,7 @@ export default function Mark() {
 
   useEffect(() => {
     const me = localStorage.getItem("LOGIN");
-    fetch(`http://${URL}/seeMarks/${me}`)
+    fetch(`${URL}/seeMarks/${me}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
         Mark.user_address ? setPlace(Mark.user_address) : setPlace("미설정");
