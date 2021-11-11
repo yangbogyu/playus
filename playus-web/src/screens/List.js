@@ -51,13 +51,13 @@ function List() {
   const [seePeopleList, setSeePeopleList] = useState();
 
   useEffect(() => {
-    fetch(`http://${URL}/seeRooms/master/${me}`)
+    fetch(`${URL}/seeRooms/master/${me}`)
       .then((res) => res.json())
       .then(({ MasterRooms }) => {
         console.log(MasterRooms);
         setSeeMasterList(MasterRooms);
       });
-    fetch(`http://${URL}/seeRooms/people/${me}`)
+    fetch(`${URL}/seeRooms/people/${me}`)
       .then((res) => res.json())
       .then(({ PeopleRooms }) => {
         setSeePeopleList(PeopleRooms);

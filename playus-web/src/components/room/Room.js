@@ -52,7 +52,7 @@ function Room({
 
   const me = localStorage.getItem("LOGIN");
   const handleRoom = () => {
-    fetch(`http://${URL}/inRooms`, {
+    fetch(`${URL}/inRooms`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

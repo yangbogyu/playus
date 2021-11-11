@@ -38,7 +38,7 @@ function Login() {
   });
 
   const fetchLogin = async ({ user_name, user_pw }) => {
-    const ok = await fetch(`http://${URL}/logins`, {
+    const ok = await fetch(`${URL}/logins`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

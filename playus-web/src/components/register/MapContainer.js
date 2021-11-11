@@ -145,7 +145,7 @@ export default function MapContainer() {
     room_time,
     room_total,
   }) => {
-    const ok = await fetch(`http://${URL}/createRooms`, {
+    const ok = await fetch(`${URL}/createRooms`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

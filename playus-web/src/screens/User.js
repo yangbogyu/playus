@@ -110,7 +110,7 @@ function User() {
   };
 
   const UPDATESTAR = async ({ user_sport, user_address }) => {
-    const ok = await fetch(`http://${URL}/updateStars`, {
+    const ok = await fetch(`${URL}/updateStars`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -123,7 +123,7 @@ function User() {
   };
 
   useEffect(() => {
-    fetch(`http://${URL}/seeMarks/${me}`)
+    fetch(`${URL}/seeMarks/${me}`)
       .then((res) => res.json())
       .then(({ Mark }) => {
         setAddress(Mark.user_address);
