@@ -1,5 +1,7 @@
+import React from "react";
 import Header from "../components/main/Header";
 import styled from "styled-components";
+import ChatRoom from "../components/comment/ChatRoom";
 
 const Container = styled.div`
   display: flex;
@@ -17,13 +19,17 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Comunication() {
+function Comunication({ match }) {
   return (
     <div>
       <Header />
       <Container>
-        <Wrapper>업데이트 예정</Wrapper>
+        <Wrapper>
+          <ChatRoom room_no={match.params.no}></ChatRoom>
+        </Wrapper>
       </Container>
     </div>
   );
 }
+
+export default Comunication;

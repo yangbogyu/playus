@@ -1,3 +1,4 @@
+import React from "react";
 import { useReactiveVar } from "@apollo/client";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./screens/Home";
@@ -40,9 +41,12 @@ function App() {
             <Route path={routes.register}>
               {isLoggedIn ? <Register /> : <Login />}
             </Route>
-            <Route path={routes.room}>
-              {isLoggedIn ? <Comunication /> : <Login />}
-            </Route>
+            {isLoggedIn ? (
+              <Route path={`${routes.room}/:no`} component={Comunication} />
+            ) : (
+              <Login />
+            )}
+
             <Route>
               <NotFound />
             </Route>

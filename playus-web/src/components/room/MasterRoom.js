@@ -35,7 +35,10 @@ export default function MasterRoom({
   user_name,
 }) {
   return (
-    <Link to={routes.room} style={{ textDecoration: "none", color: "black" }}>
+    <Link
+      to={`${routes.room}/${room_no}`}
+      style={{ textDecoration: "none", color: "black" }}
+    >
       <Container>
         <RoomContent>
           <RoomText>{room_place}</RoomText>

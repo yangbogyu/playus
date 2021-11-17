@@ -54,7 +54,6 @@ function List() {
     fetch(`${URL}/seeRooms/master/${me}`)
       .then((res) => res.json())
       .then(({ MasterRooms }) => {
-        console.log(MasterRooms);
         setSeeMasterList(MasterRooms);
       });
     fetch(`${URL}/seeRooms/people/${me}`)
