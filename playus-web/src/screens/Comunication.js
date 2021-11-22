@@ -19,13 +19,15 @@ const Wrapper = styled.div`
   }
 `;
 
-function Comunication({ match }) {
+function Comunication(props) {
+  console.log(props.location.state);
+
   return (
     <div>
       <Header />
       <Container>
         <Wrapper>
-          <ChatRoom room_no={match.params.no}></ChatRoom>
+          <ChatRoom room={props.location.state}></ChatRoom>
         </Wrapper>
       </Container>
     </div>

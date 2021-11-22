@@ -1,23 +1,16 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
-const CommentsContainer = styled.div`
-  margin-top: 20px;
-`;
-
-const CommentCount = styled.span`
-  opacity: 0.7;
-  margin: 10px 0px;
-  display: block;
-  font-weight: 600;
-  font-size: 10px;
-`;
-
 const PostCommentContainer = styled.div`
   margin-top: 10px;
   padding-top: 15px;
   padding-bottom: 10px;
   border-top: 1px solid ${(props) => props.theme.borderColor};
+`;
+
+const CommentContainer = styled.div`
+  margin: 20px;
+  padding: 20px;
 `;
 
 const PostCommentInput = styled.input`
@@ -28,37 +21,24 @@ const PostCommentInput = styled.input`
 `;
 
 function Comments() {
-  const { register, handleSubmit, setValue, getValues } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // 'payload' is in data of 'onVaild'.
   const onValid = (data) => {};
   return (
-    <CommentsContainer>
-      {/* <Comment author={author} payload={caption} /> */}
-      <CommentCount>
-        {/* {commentNumber === 1 ? "1 comment" : `${commentNumber} comments`} */}
-      </CommentCount>
-      {/* {comments?.map((comment) => (
-        <Comment
-          key={comment.id}
-          id={comment.id}
-          photoId={photoId}
-          author={comment.user.username}
-          payload={comment.payload}
-          isMine={comment.isMine}
-        />
-      ))} */}
+    <div>
+      <CommentContainer></CommentContainer>
       <PostCommentContainer>
         <form onSubmit={handleSubmit(onValid)}>
           <PostCommentInput
-          // name="payload"
-          // ref={register({ required: true })}
-          // type="text"
-          // placeholder="Write a comment..."
+            name="payload"
+            ref={register({ required: true })}
+            type="text"
+            placeholder="Write a comment..."
           />
         </form>
       </PostCommentContainer>
-    </CommentsContainer>
+    </div>
   );
 }
 

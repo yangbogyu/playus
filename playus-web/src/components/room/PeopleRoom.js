@@ -36,7 +36,20 @@ export default function PeopleRoom({
 }) {
   return (
     <Link
-      to={`${routes.room}/${room_no}`}
+      to={{
+        pathname: `${routes.room}/${room_no}`,
+        state: {
+          room_no,
+          room_place,
+          room_address,
+          room_sport,
+          room_time,
+          room_title,
+          room_total,
+          room_user,
+          user_name,
+        },
+      }}
       style={{ textDecoration: "none", color: "black" }}
     >
       <Container>

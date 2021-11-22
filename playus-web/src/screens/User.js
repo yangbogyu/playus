@@ -131,6 +131,7 @@ function User() {
       });
   }, [me]);
 
+  console.log(sport);
   return (
     <div>
       <Header />
