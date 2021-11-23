@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import Comments from "./Comments";
 import { useEffect, useState } from "react";
@@ -75,10 +74,6 @@ const Button = styled.button`
 `;
 
 function ChatRoom({ room }) {
-  const {} = useForm({
-    mode: "onChange",
-  });
-  const me = localStorage.getItem("LOGIN");
   const [seeMembers, setSeeMembers] = useState();
   const [master, setMaster] = useState();
   const [show, setShow] = useState(false);
@@ -97,7 +92,7 @@ function ChatRoom({ room }) {
           }
         }
       });
-  });
+  }, [room]);
 
   return (
     <ChatContainer>
@@ -136,7 +131,7 @@ function ChatRoom({ room }) {
             </Modal>
           </div>
         </ChatMembers>
-        <Comments />
+        <Comments room={room} />
       </ChatData>
     </ChatContainer>
   );

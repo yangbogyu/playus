@@ -19,15 +19,14 @@ const Wrapper = styled.div`
   }
 `;
 
-function Comunication(props) {
-  console.log(props.location.state);
-
+function Comunication({ location }) {
+  // console.log(location.state);
   return (
     <div>
       <Header />
       <Container>
         <Wrapper>
-          <ChatRoom room={props.location.state}></ChatRoom>
+          <ChatRoom room={location.state}></ChatRoom>
         </Wrapper>
       </Container>
     </div>

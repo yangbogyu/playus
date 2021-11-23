@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import Comment from "./Comment";
 
 const PostCommentContainer = styled.div`
   margin-top: 10px;
@@ -9,7 +10,6 @@ const PostCommentContainer = styled.div`
 `;
 
 const CommentContainer = styled.div`
-  margin: 20px;
   padding: 20px;
 `;
 
@@ -20,14 +20,16 @@ const PostCommentInput = styled.input`
   }
 `;
 
-function Comments() {
+function Comments({ room }) {
   const { register, handleSubmit } = useForm();
 
-  // 'payload' is in data of 'onVaild'.
+  console.log(room);
   const onValid = (data) => {};
   return (
     <div>
-      <CommentContainer></CommentContainer>
+      <CommentContainer>
+        <Comment></Comment>
+      </CommentContainer>
       <PostCommentContainer>
         <form onSubmit={handleSubmit(onValid)}>
           <PostCommentInput

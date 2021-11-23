@@ -37,7 +37,7 @@ export default function MasterRoom({
   return (
     <Link
       to={{
-        pathname: `${routes.room}/${room_no}`,
+        pathname: `${routes.room}`,
         state: {
           room_no,
           room_place,

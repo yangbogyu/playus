@@ -42,7 +42,11 @@ function App() {
               {isLoggedIn ? <Register /> : <Login />}
             </Route>
             {isLoggedIn ? (
-              <Route path={`${routes.room}/:no`} component={Comunication} />
+              // <Route path={`${routes.room}/:no`} component={Comunication} />
+              <Route
+                path={`${routes.room}`}
+                render={(props) => <Comunication {...props} />}
+              />
             ) : (
               <Login />
             )}
