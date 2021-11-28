@@ -7,14 +7,8 @@ const CommentContainer = styled.div`
 
 const CommentCaption = styled.span`
   margin-left: 10px;
-  a {
-    background-color: inherit;
-    color: ${(props) => props.theme.accent};
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  font-size: 11px;
+  color: rgb(38, 38, 38);
 `;
 
 const Username = styled.span`
@@ -23,11 +17,12 @@ const Username = styled.span`
   color: rgb(38, 38, 38);
 `;
 
-function Comment() {
+function Comment({ comment_no, user_name, comment_data, comment_createdAt }) {
+  const me = localStorage.getItem("LOGIN");
   return (
     <CommentContainer>
-      <Username>test</Username>
-      <CommentCaption></CommentCaption>
+      <Username>{user_name}</Username>
+      <CommentCaption>{comment_data}</CommentCaption>
     </CommentContainer>
   );
 }
