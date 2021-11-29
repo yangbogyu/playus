@@ -12,9 +12,7 @@ const PostCommentContainer = styled.div`
 `;
 
 const CommentContainer = styled.div`
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-bottom: 5px;
+  padding: 20px 10px;
 `;
 
 const PostCommentInput = styled.input`

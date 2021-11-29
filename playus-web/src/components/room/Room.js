@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import RoomInfo from "./RoomInfo";
-
 require("dotenv").config();
 const URL = process.env.REACT_APP_API;
 
