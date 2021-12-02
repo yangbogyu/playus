@@ -6,7 +6,7 @@ require("dotenv").config();
 const URL = process.env.REACT_APP_API;
 
 const CommentContainer = styled.div`
-  padding: 12px;
+  padding: 15px 15px 10px 15px;
 `;
 
 const PostCommentContainer = styled.div`
@@ -30,8 +30,6 @@ const Button = styled.button`
   color: ${(props) => props.theme.accent};
   padding: 8px 10px 8px 8px;
   font-weight: 600;
-  width: fit-content;
-
   width: fit-content;
 `;
 
