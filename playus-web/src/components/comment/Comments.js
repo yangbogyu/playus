@@ -5,27 +5,40 @@ import Comment from "./Comment";
 require("dotenv").config();
 const URL = process.env.REACT_APP_API;
 
+const CommentContainer = styled.div`
+  padding: 12px;
+`;
+
 const PostCommentContainer = styled.div`
-  padding-top: 15px;
-  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
   border-top: 1px solid ${(props) => props.theme.borderColor};
 `;
 
-const CommentContainer = styled.div`
-  padding: 20px 10px;
-`;
-
 const PostCommentInput = styled.input`
-  width: 100%;
+  margin-left: 10px;
+  padding: 10px;
   &::placeholder {
     font-size: 12px;
+    font-weight: 600;
   }
+`;
+
+const Button = styled.button`
+  border: none;
+  background-color: white;
+  color: ${(props) => props.theme.accent};
+  padding: 8px 10px 8px 8px;
+  font-weight: 600;
+  width: fit-content;
+
+  width: fit-content;
 `;
 
 function Comments({ room }) {
   const { register, handleSubmit } = useForm();
   const me = localStorage.getItem("LOGIN");
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState(null);
 
   useEffect(() => {
     fetch(`${URL}/comment/${room.room_no}`)
@@ -37,14 +50,16 @@ function Comments({ room }) {
           setComment(Comment);
         }
       });
-  }, [comment]);
+  }, [room]);
 
   const fetchSubmitValid = async ({ payload }) => {
-    console.log(payload);
     const { createComment } = await CREATECOMMENT({
       payload,
     });
-    console.log(createComment);
+    if (createComment === true) {
+      alert("성공");
+      window.location.reload();
+    }
   };
 
   const CREATECOMMENT = async ({ payload }) => {
@@ -64,19 +79,20 @@ function Comments({ room }) {
     <div>
       <CommentContainer>
         {comment?.map((comment) => (
-          <Comment key={comment.comment_no} {...comment} />
+          <Comment key={comment.comment_no} {...comment} no={room.room_no} />
         ))}
       </CommentContainer>
-      <PostCommentContainer>
-        <form onSubmit={handleSubmit(fetchSubmitValid)}>
+      <form onSubmit={handleSubmit(fetchSubmitValid)}>
+        <PostCommentContainer>
           <PostCommentInput
             name="payload"
             ref={register({ required: true })}
             type="text"
-            placeholder="Write a comment..."
+            placeholder="댓글 쓰실라우?"
           />
-        </form>
-      </PostCommentContainer>
+          <Button type="submit">작성</Button>
+        </PostCommentContainer>
+      </form>
     </div>
   );
 }

@@ -1,8 +1,8 @@
-import { faEllipsisV, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 require("dotenv").config();
 const URL = process.env.REACT_APP_API;
 
@@ -40,7 +40,35 @@ const CommentCreatedAt = styled.span`
   color: rgb(150, 150, 150);
 `;
 
-function Comment({ comment_no, user_name, comment_data, comment_createdAt }) {
+const IconContainer = styled.div`
+  margin-right: 7px;
+`;
+
+const Button = styled.button`
+  border: none;
+  border-radius: 3px;
+  background-color: ${(props) => props.theme.accent};
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-weight: 600;
+  margin-left: 50px;
+  width: fit-content;
+`;
+
+const DeleteContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+function Comment({
+  comment_no,
+  user_name,
+  comment_data,
+  comment_createdAt,
+  no,
+}) {
   const me = localStorage.getItem("LOGIN");
 
   const [show, setShow] = useState(false);
@@ -49,23 +77,24 @@ function Comment({ comment_no, user_name, comment_data, comment_createdAt }) {
   const handleShow = () => setShow(true);
 
   const deleteComment = () => {
-    // fetch(`${URL}/inRooms`, {
-    //   method: "post",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     room_no,
-    //     user_name: me,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then(({ inRoom }) => {
-    //     if (inRoom === false) {
-    //       alert("이미 참가한 방입니다.");
-    //     } else {
-    //       alert("성공!");
-    //     }
-    //     return inRoom;
-    //   });
+    if (user_name === me) {
+      fetch(`${URL}/comment/delete`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          comment_no,
+          room_no: no,
+          user_name,
+        }),
+      })
+        .then((res) => res.json())
+        .then(({ deleteComment }) => {
+          if (deleteComment === true) {
+            alert("삭제되었습니다.");
+            window.location.reload();
+          }
+        });
+    }
   };
 
   return (
@@ -75,16 +104,12 @@ function Comment({ comment_no, user_name, comment_data, comment_createdAt }) {
         <CommentCaption>{comment_data}</CommentCaption>
         <CommentCreatedAt>{comment_createdAt}</CommentCreatedAt>
       </CommentWrapper>
-      <FontAwesomeIcon icon={faEllipsisV} onClick={handleShow} />
-      <style type="text/css">
-        {`
-          .btn-flat2 {
-            background-color: #0095f6 ;
-            font-weight: 600;
-            color: white;
-          }
-        `}
-      </style>
+      <IconContainer>
+        {user_name === me ? (
+          <FontAwesomeIcon icon={faTrashAlt} onClick={handleShow} />
+        ) : null}
+      </IconContainer>
+
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header>
           <FontAwesomeIcon
@@ -93,12 +118,12 @@ function Comment({ comment_no, user_name, comment_data, comment_createdAt }) {
             size="lg"
           />
         </Modal.Header>
-        <Modal.Body>삭제하시겠습니까?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="flat2" onClick={deleteComment}>
-            삭제
-          </Button>
-        </Modal.Footer>
+        <Modal.Body>
+          <DeleteContainer>
+            삭제하실라우?
+            <Button onClick={deleteComment}>삭제</Button>
+          </DeleteContainer>
+        </Modal.Body>
       </Modal>
     </CommentContainer>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/main/Header";
 import styled from "styled-components";
 import Input from "../components/auth/Input";
+import ShowRating from "../components/rating/ShowRating";
 import { useForm } from "react-hook-form";
 require("dotenv").config();
 const URL = process.env.REACT_APP_API;
@@ -40,6 +41,13 @@ const FormBox = styled.div`
   }
 `;
 
+const UsernameWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+`;
+
 const Username = styled.span`
   margin-top: 2px;
   font-size: 15px;
@@ -50,7 +58,7 @@ const Username = styled.span`
 
 const UserAddr = styled.span`
   margin-top: 15px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: rgb(100, 100, 100);
   margin-left: 4px;
@@ -76,19 +84,21 @@ const InputWrapper = styled.div`
 `;
 
 const InputTitle = styled.div`
+  display: flex;
+  justify-items: center;
+  align-items: center;
   border-radius: 3px;
-
   margin-top: 5px;
   margin-right: 10px;
-
   background-color: rgb(216, 216, 216);
   color: rgb(100, 100, 100);
+  width: 70px;
+`;
 
-  padding: 10px;
+const InputText = styled.span`
   font-weight: 600;
-  text-align: center;
-
-  width: 80px;
+  font-size: 10px;
+  margin: auto;
 `;
 
 function User() {
@@ -106,6 +116,7 @@ function User() {
     });
     if (updateStar === true) {
       alert("성공");
+      window.location.reload();
     }
   };
 
@@ -131,38 +142,45 @@ function User() {
       });
   }, [me]);
 
-  console.log(sport);
   return (
     <div>
       <Header />
       <Container>
         <Wrapper>
           <FormBox>
-            <Username>{me}</Username>
+            <UsernameWrapper>
+              <Username>{me}</Username>
+              <ShowRating user={me} />
+            </UsernameWrapper>
+            <UserAddr>{sport}</UserAddr>
             <UserAddr>{address}</UserAddr>
           </FormBox>
           <FormBox>
             <form onSubmit={handleSubmit(fetchSubmitValid)}>
               <InputWrapper>
-                <InputTitle>Sport</InputTitle>
+                <InputTitle>
+                  <InputText>종목</InputText>
+                </InputTitle>
                 <Input
                   ref={register({
-                    required: "Sport is required",
+                    required: "종목이 없으면 되나",
                   })}
                   name="user_sport"
                   type="text"
-                  placeholder="ex) 농구 OR 축구"
+                  placeholder="농구 OR 축구"
                 />
               </InputWrapper>
               <InputWrapper>
-                <InputTitle>Addr</InputTitle>
+                <InputTitle>
+                  <InputText>주소</InputText>
+                </InputTitle>
                 <Input
                   ref={register({
-                    required: "Address Members is required",
+                    required: "주소가 없으면 되나",
                   })}
                   name="user_address"
                   type="text"
-                  placeholder="ex) 경기 성남시 수정구"
+                  placeholder="경기 성남시 수정구"
                 />
               </InputWrapper>
               <Button type="submit">바꾸기</Button>

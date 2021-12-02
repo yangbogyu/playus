@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { BaseBox } from "../shared";
 
 const SBottomBox = styled(BaseBox)`
+  font-size: 10px;
   padding: 20px 0px;
   text-align: center;
   a {
     font-weight: 600;
+
     margin-left: 5px;
     color: ${(props) => props.theme.accent};
   }

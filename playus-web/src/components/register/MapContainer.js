@@ -43,7 +43,7 @@ const FormBox = styled.div`
 const Button = styled.button`
   border: none;
   border-radius: 3px;
-  margin-top: 20px;
+  margin-top: 5px;
   background-color: ${(props) => props.theme.accent};
   color: white;
   text-align: center;
@@ -60,19 +60,21 @@ const InputWrapper = styled.div`
 `;
 
 const InputTitle = styled.div`
+  display: flex;
+  justify-items: center;
+  align-items: center;
   border-radius: 3px;
-
   margin-top: 5px;
-  margin-right: 10px;
-
+  margin-right: 5px;
   background-color: rgb(216, 216, 216);
   color: rgb(100, 100, 100);
+  width: 70px;
+`;
 
-  padding: 10px;
+const InputText = styled.span`
   font-weight: 600;
-  text-align: center;
-
-  width: 80px;
+  font-size: 10px;
+  margin: auto;
 `;
 
 export default function MapContainer() {
@@ -82,7 +84,7 @@ export default function MapContainer() {
 
   const me = localStorage.getItem("LOGIN");
 
-  const [InputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState("");
   const [Place, setPlace] = useState("서울 시청");
 
   const [searchPlace, setSearchPlace] = useState("");
@@ -214,49 +216,55 @@ export default function MapContainer() {
           <Input
             placeholder="검색어를 입력하세요"
             onChange={onChange}
-            value={InputText}
+            value={inputText}
           />
           <Button type="submit">검색</Button>
         </form>
         <Map id="Map"></Map>
         <form onSubmit={handleSubmit(fetchSubmitValid)}>
           <InputWrapper>
-            <InputTitle>Title</InputTitle>
+            <InputTitle>
+              <InputText>주소</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Title is required",
+                required: "제목 없으면 되나",
               })}
               name="room_title"
               type="text"
-              placeholder="ex) 농구할사람"
+              placeholder="농구할사람"
               hasError={Boolean(errors?.room_title?.message)}
             />
           </InputWrapper>
           <FormError message={errors?.room_title?.message} />
 
           <InputWrapper>
-            <InputTitle>Sport</InputTitle>
+            <InputTitle>
+              <InputText>주소</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Sport is required",
+                required: "종목가 없으면 되나",
               })}
               name="room_sport"
               type="text"
-              placeholder="ex) 농구 or 축구"
+              placeholder="농구 or 축구"
               hasError={Boolean(errors?.room_sport?.message)}
             />
           </InputWrapper>
           <FormError message={errors?.room_sport?.message} />
 
           <InputWrapper>
-            <InputTitle>Place</InputTitle>
+            <InputTitle>
+              <InputText>제목</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Place is required",
+                required: "장소가 없으면 되나",
               })}
               name="room_place"
               type="text"
-              placeholder="ex) 서울 시청"
+              placeholder="서울 시청"
               onChange={onSearchChange}
               value={searchPlace}
               hasError={Boolean(errors?.room_place?.message)}
@@ -265,14 +273,16 @@ export default function MapContainer() {
           <FormError message={errors?.room_place?.message} />
 
           <InputWrapper>
-            <InputTitle>Addr</InputTitle>
+            <InputTitle>
+              <InputText>주소</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Address is required",
+                required: "주소가 없으면 되나",
               })}
               name="room_address"
               type="text"
-              placeholder="ex) 서울 중구 정동 5-5"
+              placeholder="서울 중구 정동 5-5"
               onChange={onAddressChange}
               value={address}
               hasError={Boolean(errors?.room_address?.message)}
@@ -281,28 +291,32 @@ export default function MapContainer() {
           <FormError message={errors?.room_address?.message} />
 
           <InputWrapper>
-            <InputTitle>Time</InputTitle>
+            <InputTitle>
+              <InputText>시간</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Time is required",
+                required: "시간이 없으면 되나",
               })}
               name="room_time"
               type="text"
-              placeholder="ex) 2021-10-01 10:00:00"
+              placeholder="2021-10-01 10:00:00"
               hasError={Boolean(errors?.room_time?.message)}
             />
           </InputWrapper>
           <FormError message={errors?.room_time?.message} />
 
           <InputWrapper>
-            <InputTitle>Total</InputTitle>
+            <InputTitle>
+              <InputText>인원</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Total Members is required",
+                required: "인원이 없으면 되나",
               })}
               name="room_total"
               type="number"
-              placeholder="ex) 6"
+              placeholder="6"
               hasError={Boolean(errors?.room_total?.message)}
             />
           </InputWrapper>
