@@ -11,17 +11,15 @@ from dotenv import load_dotenv
 
 load_dotenv()  # `.env`파일 불러옴
 
-
-def DBset():  # db연동
+def setDB(): # db연동
     db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                         port=int(os.getenv('MYSQL_PORT')),
-                         user=os.getenv('MYSQL_USER'),
-                         passwd=os.getenv('MYSQL_PASSWORD'),
-                         db=os.getenv('MYSQL_DATABASE'),
-                         charset=os.getenv('MYSQL_CHARSET'),
-                         cursorclass=pymysql.cursors.DictCursor)
+                    port=int(os.getenv('MYSQL_PORT')),
+                    user=os.getenv('MYSQL_USER'),
+                    passwd=os.getenv('MYSQL_PASSWORD'),
+                    db=os.getenv('MYSQL_DATABASE'),
+                    charset=os.getenv('MYSQL_CHARSET'),
+                    cursorclass=pymysql.cursors.DictCursor)
     return db
-
 
 login = Namespace(
     name='login',
@@ -34,14 +32,8 @@ class Login(Resource):
     def put(self):
         '''로그인 인증'''
 
-        db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                             port=int(os.getenv('MYSQL_PORT')),
-                             user=os.getenv('MYSQL_USER'),
-                             passwd=os.getenv('MYSQL_PASSWORD'),
-                             db=os.getenv('MYSQL_DATABASE'),
-                             charset=os.getenv('MYSQL_CHARSET'),
-                             cursorclass=pymysql.cursors.DictCursor)
-
+        db = setDB()
+                    
         data = request.get_json()
         # data = json.loads(request.data)
         user_name = data['user_name']
