@@ -16,18 +16,23 @@ markRoom = Namespace(
     description='markRoom API'
 )
 
-@markRoom.route('/<string:user_name>')
-class Mark(Resource):
-    def get(self, user_name):
-        '''방 리스트'''
-
-        db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
+def setDB():
+    db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
                     port=int(os.getenv('MYSQL_PORT')),
                     user=os.getenv('MYSQL_USER'),
                     passwd=os.getenv('MYSQL_PASSWORD'),
                     db=os.getenv('MYSQL_DATABASE'),
                     charset=os.getenv('MYSQL_CHARSET'),
                     cursorclass=pymysql.cursors.DictCursor)
+    return db
+
+@markRoom.route('/<string:user_name>')
+class Mark(Resource):
+    def get(self, user_name):
+        '''방 리스트'''
+
+        db = setDB()
+                            
         base = db.cursor()
         sql = f'select user_sport, user_address from User\
                 where user_name = "{user_name}";'
@@ -57,12 +62,14 @@ class Mark(Resource):
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no\
+                where r.room_time > now()\
                 group by r.room_no having count(*);'
         else:
             sql = f'select r.room_no, r.room_title, r.room_sport, r.room_place,r.room_address, r.room_time, r.room_total, u.user_name, COUNT(*) as room_user\
                 from Room as r\
                 right outer join Room_user as u\
                 on u.room_no = r.room_no {where_sql}\
+                and r.room_time > now()\
                 group by r.room_no having count(*);'
 
         base = db.cursor()

@@ -11,24 +11,27 @@ from dotenv import load_dotenv
 
 load_dotenv()  # `.env`파일 불러옴
 
-db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                     port=int(os.getenv('MYSQL_PORT')),
-                     user=os.getenv('MYSQL_USER'),
-                     passwd=os.getenv('MYSQL_PASSWORD'),
-                     db=os.getenv('MYSQL_DATABASE'),
-                     charset=os.getenv('MYSQL_CHARSET'),
-                     cursorclass=pymysql.cursors.DictCursor)
-
 outRoom = Namespace(
     name='outRoom',
     description='outRoom API'
 )
 
+def setDB():
+    db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
+                    port=int(os.getenv('MYSQL_PORT')),
+                    user=os.getenv('MYSQL_USER'),
+                    passwd=os.getenv('MYSQL_PASSWORD'),
+                    db=os.getenv('MYSQL_DATABASE'),
+                    charset=os.getenv('MYSQL_CHARSET'),
+                    cursorclass=pymysql.cursors.DictCursor)
+    return db
 
 @outRoom.route('')
 class Out(Resource):
     def delete(self):
         '''방 나가기'''
+
+        db = setDB()
 
         data = request.get_json()
         user_name = data['user_name']
