@@ -24,8 +24,6 @@ function Separator() {
   return (
     <SSeparator>
       <div></div>
-      <span>Or</span>
-      <div></div>
     </SSeparator>
   );
 }

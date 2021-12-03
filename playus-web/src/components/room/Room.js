@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import RoomInfo from "./RoomInfo";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import ShowRating from "../rating/ShowRating";
 require("dotenv").config();
 const URL = process.env.REACT_APP_API;
 
@@ -30,11 +32,50 @@ const RoomText = styled.span`
   margin-left: 15px;
 `;
 
+const Username = styled.span`
+  font-size: 15px;
+  font-weight: 600;
+  color: rgb(38, 38, 38);
+  margin-left: 4px;
+`;
+
 const RoomButton = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20px;
+`;
+
+const Button = styled.button`
+  border: none;
+  border-radius: 3px;
+  background-color: ${(props) => props.theme.accent};
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-weight: 600;
+  width: fit-content;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: fit-content;
+`;
+
+const InfoTitle = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  margin: 7px 20px 7px 7px;
+  padding-left: 20px;
+  color: rgb(100, 100, 100);
+`;
+
+const InfoContent = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(110, 110, 110);
 `;
 
 function Room({
@@ -47,6 +88,7 @@ function Room({
   room_total,
   room_user,
   user_name,
+  room_createdAt,
 }) {
   const [show, setShow] = useState(false);
 
@@ -66,6 +108,7 @@ function Room({
           alert("이미 참가한 방입니다.");
         } else {
           alert("성공!");
+          window.location.reload();
         }
         return inRoom;
       });
@@ -82,49 +125,52 @@ function Room({
         <RoomText>{room_time}</RoomText>
       </RoomContent>
       <RoomButton>
-        <style type="text/css">
-          {`
-          .modal-header {
-            margin: 5px;
-            font-weight: 600;
-            color: black;
-          }
-          .btn-flat {
-            background-color: rgb(100, 100, 100) ;
-            font-weight: 600;
-            color: white;
-          }
-          .btn-flat2 {
-            background-color: #0095f6 ;
-            font-weight: 600;
-            color: white;
-          }
-        `}
-        </style>
-        <Button variant="flat2" onClick={handleShow} size="sm">
-          세부정보
-        </Button>
+        <Button onClick={handleShow}>세부정보</Button>
         <Modal show={show} onHide={handleClose} animation={false}>
           <Modal.Header>
-            <Modal.Title>{room_title}</Modal.Title>
+            <FontAwesomeIcon
+              icon={faWindowClose}
+              onClick={handleClose}
+              size="lg"
+            />
+            <Username>세부정보</Username>
+            <Button onClick={handleRoom}>참가하기</Button>
           </Modal.Header>
           <Modal.Body>
-            <RoomInfo title="장소" content={room_place} />
-            <RoomInfo title="주소" content={room_address} />
-            <RoomInfo title="시간" content={room_time} />
-            <RoomInfo title="종목" content={room_sport} />
-            <RoomInfo title="총원" content={room_total + " 명"} />
-            <RoomInfo title="인원" content={room_user + " 명"} />
-            <RoomInfo title="방장" content={user_name} />
+            <InfoContainer>
+              <InfoTitle>방장</InfoTitle>
+              <InfoContent>{user_name}</InfoContent>
+              <ShowRating user={user_name} />
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>장소</InfoTitle>
+              <InfoContent>{room_place}</InfoContent>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>주소</InfoTitle>
+              <InfoContent>{room_address}</InfoContent>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>시간</InfoTitle>
+              <InfoContent>{room_time}</InfoContent>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>장소</InfoTitle>
+              <InfoContent>{room_title}</InfoContent>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>종목</InfoTitle>
+              <InfoContent>{room_sport}</InfoContent>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>총원</InfoTitle>
+              <InfoContent>{room_total}</InfoContent>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoTitle>인원</InfoTitle>
+              <InfoContent>{room_user}</InfoContent>
+            </InfoContainer>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="flat" onClick={handleClose}>
-              닫기
-            </Button>
-            <Button variant="flat2" onClick={handleRoom}>
-              참가하기
-            </Button>
-          </Modal.Footer>
         </Modal>
       </RoomButton>
     </RoomContainer>

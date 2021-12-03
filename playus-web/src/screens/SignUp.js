@@ -30,19 +30,21 @@ const InputWrapper = styled.div`
 `;
 
 const InputTitle = styled.div`
+  display: flex;
+  justify-items: center;
+  align-items: center;
   border-radius: 3px;
-
   margin-top: 5px;
   margin-right: 10px;
-
   background-color: rgb(216, 216, 216);
   color: rgb(100, 100, 100);
-
-  padding: 10px;
-  font-weight: 600;
-  text-align: center;
-
   width: 70px;
+`;
+
+const InputText = styled.span`
+  font-weight: 600;
+  font-size: 10px;
+  margin: auto;
 `;
 
 function SingUp() {
@@ -53,17 +55,17 @@ function SingUp() {
 
   // 유저이름 중복체크 fetch
   const checkUsername = async ({ user_name }) => {
-    const ok = await fetch(
-      `${URL}/createAccounts/IDCheck/${user_name}`
-    ).then((res) => res.json());
+    const ok = await fetch(`${URL}/createAccounts/IDCheck/${user_name}`).then(
+      (res) => res.json()
+    );
     return ok;
   };
 
   // 이메일 중복체크 fetch
   const checkEmail = async ({ user_mail }) => {
-    const ok = await fetch(
-      `${URL}/createAccounts/mailCheck/${user_mail}`
-    ).then((res) => res.json());
+    const ok = await fetch(`${URL}/createAccounts/mailCheck/${user_mail}`).then(
+      (res) => res.json()
+    );
     return ok;
   };
 
@@ -148,10 +150,12 @@ function SingUp() {
         </HeaderContainer>
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <InputWrapper>
-            <InputTitle>User</InputTitle>
+            <InputTitle>
+              <InputText>이름</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Username is required.",
+                required: "사용자 이름이 없으면 되나",
               })}
               name="user_name"
               type="text"
@@ -161,10 +165,12 @@ function SingUp() {
           </InputWrapper>
           <FormError message={errors?.user_name?.message} />
           <InputWrapper>
-            <InputTitle>PW</InputTitle>
+            <InputTitle>
+              <InputText>비밀번호</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Password is required.",
+                required: "비밀번호가 없으면 되나",
               })}
               name="user_pw"
               type="password"
@@ -174,10 +180,12 @@ function SingUp() {
           </InputWrapper>
           <FormError message={errors?.user_pw?.message} />
           <InputWrapper>
-            <InputTitle>PH</InputTitle>
+            <InputTitle>
+              <InputText>핸드폰</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Phone is required.",
+                required: "핸드폰 번호가 없으면 되나",
               })}
               name="user_phone"
               type="tel"
@@ -187,10 +195,12 @@ function SingUp() {
           </InputWrapper>
           <FormError message={errors?.user_phone?.message} />
           <InputWrapper>
-            <InputTitle>Email</InputTitle>
+            <InputTitle>
+              <InputText>이메일</InputText>
+            </InputTitle>
             <Input
               ref={register({
-                required: "Email is required.",
+                required: "이메일이 없으면 되나",
               })}
               name="user_mail"
               type="email"
@@ -200,31 +210,39 @@ function SingUp() {
           </InputWrapper>
           <FormError message={errors?.user_mail?.message} />
           <InputWrapper>
-            <InputTitle>Sport</InputTitle>
+            <InputTitle>
+              <InputText>종목</InputText>
+            </InputTitle>
             <Input
               ref={register({
                 required: false,
               })}
               name="user_sport"
               type="text"
-              placeholder="ex) 농구 OR 축구"
+              placeholder="농구 OR 축구"
             />
           </InputWrapper>
           <InputWrapper>
-            <InputTitle>Addr</InputTitle>
+            <InputTitle>
+              <InputText>주소</InputText>
+            </InputTitle>
             <Input
               ref={register({
                 required: false,
               })}
               name="user_address"
               type="text"
-              placeholder="ex) 경기 성남시 수정구"
+              placeholder="경기 성남시 수정구"
             />
           </InputWrapper>
-          <Button type="submit" value="Sign Up" disabled={!formState.isValid} />
+          <Button
+            type="submit"
+            value="회원가입"
+            disabled={!formState.isValid}
+          />
         </form>
       </FormBox>
-      <BottomBox cta="Have an account?" linkText="Log in" link={routes.home} />
+      <BottomBox cta="아이디 있지?" linkText="로그인" link={routes.home} />
     </AuthLayout>
   );
 }

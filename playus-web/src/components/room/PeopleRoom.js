@@ -23,7 +23,7 @@ const RoomText = styled.span`
   margin-left: 15px;
 `;
 
-export default function PeopleRoom({
+function PeopleRoom({
   room_no,
   room_place,
   room_address,
@@ -33,9 +33,27 @@ export default function PeopleRoom({
   room_total,
   room_user,
   user_name,
+  room_createdAt,
 }) {
   return (
-    <Link to={routes.room} style={{ textDecoration: "none", color: "black" }}>
+    <Link
+      to={{
+        pathname: `${routes.room}`,
+        state: {
+          room_no,
+          room_place,
+          room_address,
+          room_sport,
+          room_time,
+          room_title,
+          room_total,
+          room_user,
+          user_name,
+          room_createdAt,
+        },
+      }}
+      style={{ textDecoration: "none", color: "black" }}
+    >
       <Container>
         <RoomContent>
           <RoomText>{room_place}</RoomText>
@@ -45,3 +63,4 @@ export default function PeopleRoom({
     </Link>
   );
 }
+export default PeopleRoom;

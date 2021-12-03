@@ -23,11 +23,6 @@ const Wrapper = styled.div`
 `;
 
 function Home() {
-  // const [index, setIndex] = useState(0);
-
-  // const handleSelect = (selectedIndex, e) => {
-  //   setIndex(selectedIndex);
-  // };
   const me = localStorage.getItem("LOGIN");
   const [seeRoom, setSeeRoom] = useState();
 
@@ -36,7 +31,6 @@ function Home() {
       .then((res) => res.json())
       .then(({ MarkRooms }) => {
         setSeeRoom(MarkRooms);
-        console.log(MarkRooms);
       });
   }, [me]);
 

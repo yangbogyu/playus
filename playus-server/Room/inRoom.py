@@ -13,19 +13,22 @@ inRoom = Namespace(
     description='inRoom API'
 )
 
+def setDB():
+    db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
+                    port=int(os.getenv('MYSQL_PORT')),
+                    user=os.getenv('MYSQL_USER'),
+                    passwd=os.getenv('MYSQL_PASSWORD'),
+                    db=os.getenv('MYSQL_DATABASE'),
+                    charset=os.getenv('MYSQL_CHARSET'),
+                    cursorclass=pymysql.cursors.DictCursor)
+    return db
 
 @inRoom.route('')
 class In(Resource):
     def post(self):
         '''방 들어가기'''
 
-        db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                             port=int(os.getenv('MYSQL_PORT')),
-                             user=os.getenv('MYSQL_USER'),
-                             passwd=os.getenv('MYSQL_PASSWORD'),
-                             db=os.getenv('MYSQL_DATABASE'),
-                             charset=os.getenv('MYSQL_CHARSET'),
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = setDB()
 
         # 데이터 형식
         data = request.get_json()

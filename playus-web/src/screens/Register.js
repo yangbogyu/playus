@@ -19,12 +19,6 @@ const Wrapper = styled.div`
   }
 `;
 
-// 방 제목 = input
-// 종목 = checkBox or button
-// 시간
-// 장소
-// 최종 인원 수
-
 function Register() {
   return (
     <div>

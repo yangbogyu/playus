@@ -11,13 +11,15 @@ from dotenv import load_dotenv
 
 load_dotenv()  # `.env`파일 불러옴
 
-db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
-                     port=int(os.getenv('MYSQL_PORT')),
-                     user=os.getenv('MYSQL_USER'),
-                     passwd=os.getenv('MYSQL_PASSWORD'),
-                     db=os.getenv('MYSQL_DATABASE'),
-                     charset=os.getenv('MYSQL_CHARSET'),
-                     cursorclass=pymysql.cursors.DictCursor)
+def setDB():
+    db = pymysql.connect(host=os.getenv('MYSQL_HOST'),
+                        port=int(os.getenv('MYSQL_PORT')),
+                        user=os.getenv('MYSQL_USER'),
+                        passwd=os.getenv('MYSQL_PASSWORD'),
+                        db=os.getenv('MYSQL_DATABASE'),
+                        charset=os.getenv('MYSQL_CHARSET'),
+                        cursorclass=pymysql.cursors.DictCursor)
+    return db
 
 Create = Namespace(
     name='createAccount',
@@ -29,6 +31,8 @@ Create = Namespace(
 class CreateAccount(Resource):
     def post(self):
         '''회원가입'''
+
+        db = setDB()
 
         data = request.get_json()
         user_name = data['user_name']
@@ -96,6 +100,9 @@ class CreateAccount(Resource):
 class IDCheck(Resource):
     def get(self, user_name):
         '''회원가입 ID 중복 확인'''
+
+        db = setDB()
+
         base = db.cursor()
         sql = f'select user_name\
                 from User\
@@ -112,6 +119,9 @@ class IDCheck(Resource):
 class MailCheck(Resource):
     def get(self, user_mail):
         '''회원가입 이메일 중복 확인'''
+
+        db = setDB()
+        
         base = db.cursor()
         sql = f'select user_mail\
                 from User\
@@ -128,6 +138,9 @@ class MailCheck(Resource):
 class PhoneCheck(Resource):
     def get(self, user_phone):
         '''회원가입 핸드폰 번호 중복 확인'''
+
+        db = setDB()
+        
         base = db.cursor()
         sql = f'select user_phone\
                 from User\

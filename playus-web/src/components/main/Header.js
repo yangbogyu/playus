@@ -40,7 +40,7 @@ const IconsContainer = styled.div`
   align-items: center;
 `;
 
-const Icon = styled.span`
+const Icon = styled.div`
   margin-left: 15px;
 `;
 
@@ -83,11 +83,13 @@ export default function Header() {
                   <FontAwesomeIcon icon={faUser} />
                 </Link>
               </Icon>
-              <Icon>
-                <FontAwesomeIcon
-                  icon={faSignOutAlt}
-                  onClick={() => logUserout()}
-                />
+              <Icon onClick={() => logUserout()}>
+                <Link
+                  to={routes.home}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <FontAwesomeIcon icon={faSignOutAlt} />
+                </Link>
               </Icon>
             </IconsContainer>
           </Column>

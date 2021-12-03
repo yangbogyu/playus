@@ -21,6 +21,7 @@ const Logo = styled.img`
 
 const SignUp = styled.div`
   color: #385285;
+  font-size: 10px;
   span {
     margin-left: 10px;
     font-weight: 600;
@@ -28,6 +29,7 @@ const SignUp = styled.div`
   a {
     font-weight: 600;
     margin-left: 5px;
+
     color: ${(props) => props.theme.accent};
   }
 `;
@@ -55,7 +57,7 @@ function Login() {
     if (login === true) {
       logUserIn(user_name);
     } else if (login === false) {
-      alert("Please enter your 'Username' and 'Password' correctly.");
+      alert("아이디와 비밀번호 확인하소");
     }
   };
 
@@ -67,30 +69,30 @@ function Login() {
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
             ref={register({
-              required: "Username is required",
+              required: "사용자 이름 넣으소",
             })}
             name="user_name"
             type="text"
-            placeholder="Username"
+            placeholder="사용자 이름"
             hasError={Boolean(errors?.user_name?.message)}
           />
           <FormError message={errors?.user_name?.message} />
           <Input
             ref={register({
-              required: "Password is required.",
+              required: "비밀번호 넣으소",
             })}
             name="user_pw"
             type="password"
-            placeholder="Password"
+            placeholder="비밀번호"
             hasError={Boolean(errors?.user_pw?.message)}
           />
           <FormError message={errors?.user_pw?.message} />
-          <Button type="submit" value="Log in" disabled={!formState.isValid} />
+          <Button type="submit" value="로그인" disabled={!formState.isValid} />
         </form>
         <Separator />
         <SignUp>
-          Don't have an account?
-          <Link to={routes.signUp}>Sign up</Link>
+          아이디 있나?
+          <Link to={routes.signUp}>회원가입</Link>
         </SignUp>
       </FormBox>
     </AuthLayout>

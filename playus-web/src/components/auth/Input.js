@@ -10,7 +10,7 @@ const Input = styled.input`
   margin-top: 5px;
   box-sizing: border-box;
   &::placeholder {
-    font-size: 12px;
+    font-size: 10px;
   }
   &:focus {
     border-color: rgb(38, 38, 38);
