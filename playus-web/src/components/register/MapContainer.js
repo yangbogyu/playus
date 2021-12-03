@@ -85,7 +85,7 @@ export default function MapContainer() {
   const me = localStorage.getItem("LOGIN");
 
   const [inputText, setInputText] = useState("");
-  const [Place, setPlace] = useState("서울 시청");
+  const [place, setPlace] = useState("서울 시청");
 
   const [searchPlace, setSearchPlace] = useState("");
   const [address, setAddress] = useState("");
@@ -104,7 +104,7 @@ export default function MapContainer() {
 
   const searchSubmit = (e) => {
     e.preventDefault();
-    setPlace(InputText);
+    setPlace(inputText);
     setInputText("");
   };
 
@@ -134,6 +134,7 @@ export default function MapContainer() {
     });
     if (createRoom === true) {
       alert("성공");
+      window.location.reload();
     } else {
       alert("이미 존재한 방입니다.");
     }
@@ -173,7 +174,7 @@ export default function MapContainer() {
 
     const ps = new kakao.maps.services.Places();
 
-    ps.keywordSearch(Place, placesSearchCB);
+    ps.keywordSearch(place, placesSearchCB);
 
     function placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
@@ -207,7 +208,7 @@ export default function MapContainer() {
         infowindow.open(map, marker);
       });
     }
-  }, [Place]);
+  }, [place]);
 
   return (
     <div>
