@@ -49,7 +49,6 @@ function List() {
   const me = localStorage.getItem("LOGIN");
   const [seeMasterList, setSeeMasterList] = useState();
   const [seePeopleList, setSeePeopleList] = useState();
-  console.log(seeMasterList);
 
   useEffect(() => {
     fetch(`${URL}/seeRooms/master/${me}`)

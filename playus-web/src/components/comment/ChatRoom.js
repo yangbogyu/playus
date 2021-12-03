@@ -4,8 +4,9 @@ import Comments from "./Comments";
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { faPen, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import UpdateRating from "../rating/UpdateRating";
 import { useForm } from "react-hook-form";
+import Rating from "@mui/material/Rating";
+import Stack from "@mui/material/Stack";
 require("dotenv").config();
 const URL = process.env.REACT_APP_API;
 
@@ -75,10 +76,16 @@ const UserList = styled.div`
   }
 `;
 
-const ModalWrapper = styled.div`
+const RatingContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: fit-content;
+`;
+
+const RatingWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 10px;
 `;
 
 const Button = styled.button`
@@ -120,7 +127,6 @@ const Input = styled.textarea`
 `;
 
 function ChatRoom({ room }) {
-  console.log(room);
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
@@ -128,6 +134,7 @@ function ChatRoom({ room }) {
   const [seeMembers, setSeeMembers] = useState();
   const [master, setMaster] = useState();
   const [notice, setNotice] = useState();
+  const [rating, setRating] = useState(5);
 
   const [showMem, setShowMem] = useState(false);
   const [showStar, setShowStar] = useState(false);
@@ -163,6 +170,25 @@ function ChatRoom({ room }) {
     return ok;
   };
 
+  const updateRating = () => {
+    fetch(`${URL}/rating/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_name: me,
+        rating_user: room.user_name,
+        rating_data: rating,
+      }),
+    })
+      .then((res) => res.json())
+      .then(({ createRating }) => {
+        if (createRating === true) {
+          alert("평점 입력이 완료되었소");
+          window.location.reload();
+        }
+      });
+  };
+
   useEffect(() => {
     fetch(`${URL}/seeRooms/list/${room.room_no}`)
       .then((res) => res.json())
@@ -195,15 +221,26 @@ function ChatRoom({ room }) {
                 size="lg"
               />
               <Username>평점주기</Username>
-              <Button>확인</Button>
+              <Button onClick={updateRating}>확인</Button>
             </Modal.Header>
             <Modal.Body>
-              <ModalWrapper>
+              <RatingContainer>
                 <InfoWrapper>
                   <Username>{master}</Username>
                 </InfoWrapper>
-                <UpdateRating user={room.user_name} />
-              </ModalWrapper>
+                <RatingWrapper>
+                  <Stack spacing={1}>
+                    <Rating
+                      name="half-rating-read"
+                      value={rating}
+                      precision={0.5}
+                      onChange={(event, newValue) => {
+                        setRating(newValue);
+                      }}
+                    ></Rating>
+                  </Stack>
+                </RatingWrapper>
+              </RatingContainer>
             </Modal.Body>
           </Modal>
         </InfoHeader>
